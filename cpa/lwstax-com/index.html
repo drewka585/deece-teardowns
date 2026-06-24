@@ -1,0 +1,126 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LWS Tax &amp; Accounting · Client-Acquisition Funnel Teardown</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#0A0A1F;--accent:#7060E8;--accent-dk:#5040D0;--panel:#15132a;--line:#2a2840;--muted:#9a98b4;--text:#1b1a2e;--miss:#b91c1c;--opp:#92400e;--good:#15803d}
+body{font-family:'Inter',-apple-system,system-ui,sans-serif;background:#f6f5fb;color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px 80px}
+.hero{background:var(--navy);color:#fff;border-radius:0 0 28px 28px;padding:38px 34px 44px;margin-bottom:34px}
+.hero-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;opacity:.85;font-size:12px}
+.hero-logo{height:22px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px}
+.hero h1{font-size:34px;line-height:1.15;font-weight:800;letter-spacing:-.02em}
+.hero h1 .accent{color:var(--accent);font-weight:700}
+.hero-bottomline{margin-top:24px;background:rgba(112,96,232,.12);border:1px solid rgba(112,96,232,.35);border-radius:14px;padding:16px 18px;font-size:15px;color:#e9e8f6}
+.hero-bottomline .label{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:6px}
+.section{background:#fff;border:1px solid #ebe9f3;border-radius:16px;padding:24px 26px;margin-bottom:20px;box-shadow:0 1px 3px rgba(10,10,31,.04)}
+.section-title{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-dk);font-weight:700;margin-bottom:16px}
+.snapshot{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.snap-cell{background:#f6f5fb;border-radius:12px;padding:14px}
+.snap-cell .label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
+.snap-cell .value{font-size:17px;font-weight:700;color:var(--navy)}
+table.peer{width:100%;border-collapse:collapse;font-size:14px}
+table.peer th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:8px 10px;border-bottom:2px solid #ebe9f3}
+table.peer td{padding:10px;border-bottom:1px solid #f0eef7;vertical-align:top}
+.peer-pattern{margin-top:14px;font-style:italic;color:#56546f;font-size:14px}
+.gap{border:1px solid #ebe9f3;border-radius:13px;padding:16px 18px;margin-bottom:12px}
+.gap-title{font-weight:700;color:var(--navy);font-size:16px;margin-bottom:12px;display:flex;gap:10px;align-items:baseline}
+.gap-num{color:var(--accent);font-weight:800}
+.gap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.gap-cell-label{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
+.gap-cell-text{font-size:13.5px;color:#3a3852}
+.tech-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.tech-cell{background:#f6f5fb;border-radius:12px;padding:14px}
+.tech-cell-row1{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:10px}
+.tech-signal{font-weight:700;color:var(--navy);font-size:14px}
+.tech-status{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 8px;border-radius:20px}
+.tech-status.miss{background:#fee2e2;color:var(--miss)}
+.tech-status.opp{background:#fef3c7;color:var(--opp)}
+.tech-status.good{background:#dcfce7;color:var(--good)}
+.tech-rec{font-size:13px;color:#56546f}
+.leadgen-channel{font-weight:800;color:var(--accent-dk);font-size:17px;margin-bottom:8px}
+.leadgen-math{margin-top:8px;font-size:13.5px;color:#3a3852;background:#f6f5fb;border-radius:10px;padding:10px 12px;font-weight:600}
+.tldr{background:var(--navy);color:#e9e8f6;border-radius:16px;padding:24px 26px;margin-bottom:20px}
+.tldr-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:10px}
+.cta{position:sticky;bottom:0;z-index:10;background:linear-gradient(135deg,var(--accent),var(--accent-dk));color:#fff;border-radius:18px;padding:24px 28px;margin-top:24px;display:flex;justify-content:space-between;align-items:center;gap:20px;box-shadow:0 10px 30px rgba(80,64,208,.35)}
+.cta-text h3{font-size:19px;font-weight:800;margin-bottom:4px}
+.cta-text p{font-size:14px;opacity:.92}
+.cta-actions{display:flex;gap:10px;flex-shrink:0}
+.btn{display:inline-block;padding:13px 22px;border-radius:11px;font-weight:700;font-size:14px;text-decoration:none;white-space:nowrap;border:0;cursor:pointer}
+.btn-primary{background:#fff;color:var(--accent-dk)}
+.btn-ghost{background:rgba(255,255,255,.15);color:#fff}
+.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:30px}
+/* loading */
+#loading{min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px}
+.spinner{width:46px;height:46px;border:4px solid #e5e2f0;border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite;margin-bottom:24px}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loadline{color:#56546f;font-size:15px;font-weight:500}
+@media(max-width:680px){.snapshot{grid-template-columns:repeat(2,1fr)}.gap-grid,.tech-grid{grid-template-columns:1fr}.hero h1{font-size:27px}.cta{flex-direction:column;align-items:stretch;text-align:center}.cta-actions{justify-content:center}}
+</style></head><body>
+<div class="wrap">
+  <div id="loading"><div class="spinner"></div><div id="loadline">Starting analysis...</div></div>
+  <div id="result" style="display:none">
+<div class="hero">
+  <div class="hero-top"><div style="font-weight:700;letter-spacing:.04em">DeeCe Digital</div>
+    <div>Client-Acquisition Funnel Teardown · June 24, 2026</div></div>
+  <div class="eyebrow">Prepared for</div>
+  <h1>LWS Tax &amp; Accounting<br><span class="accent">Where your funnel is leaking</span></h1>
+  <div class="hero-bottomline"><span class="label">Bottom line</span>You&#x27;re getting found for &#x27;Springfield CPA&#x27; but losing the click to two firms with 3x your review count and a booking widget you don&#x27;t have. The fixes below are an afternoon of work.</div>
+</div>
+<div class="section"><div class="section-title">Where you stand right now</div><div class="snapshot"><div class="snap-cell"><div class="label">Practice areas</div><div class="value">Tax + Bookkeeping</div></div><div class="snap-cell"><div class="label">Google rating</div><div class="value">4.6 (18)</div></div><div class="snap-cell"><div class="label">Local rank</div><div class="value">#5 for &#x27;Springfield CPA&#x27;</div></div><div class="snap-cell"><div class="label">Consult CTA</div><div class="value">Phone only</div></div></div></div>
+<div class="section"><div class="section-title">Who's eating your lunch locally</div>
+  <table class="peer"><tr><th>Firm</th><th>Rating</th><th>Reviews</th><th>Rank</th><th>Homepage lead</th></tr><tr><td><strong>Apex CPA Group</strong></td><td>4.9</td><td>112</td><td>#1</td><td>"Book a free strategy call in 60 seconds"</td></tr><tr><td><strong>Miller &amp; Co</strong></td><td>4.8</td><td>74</td><td>#2</td><td>"Tax planning for growing businesses"</td></tr><tr><td><strong>Springfield Tax Pros</strong></td><td>4.7</td><td>53</td><td>#3</td><td>"Same-day quotes, no surprises"</td></tr></table>
+  <div class="peer-pattern">Every firm ranking above you has an online booking CTA above the fold. You ask people to call during business hours, which leaks every after-hours visitor.</div></div>
+<div class="section"><div class="section-title">3 specific gaps I'd close first</div><div class="gap"><div class="gap-title"><span class="gap-num">01</span>No online booking above the fold</div>
+        <div class="gap-grid">
+          <div><div class="gap-cell-label">What's there now</div><div class="gap-cell-text">Phone number only, no scheduler</div></div>
+          <div><div class="gap-cell-label">What it's costing</div><div class="gap-cell-text">Approx $3,800/mo in after-hours visitors who never call back</div></div>
+          <div><div class="gap-cell-label">Quick fix</div><div class="gap-cell-text">Add a HubSpot/Cal booking widget to the hero</div></div>
+        </div></div><div class="gap"><div class="gap-title"><span class="gap-num">02</span>Thin review profile</div>
+        <div class="gap-grid">
+          <div><div class="gap-cell-label">What's there now</div><div class="gap-cell-text">18 reviews vs 74-112 for top 2</div></div>
+          <div><div class="gap-cell-label">What it's costing</div><div class="gap-cell-text">Lower map-pack rank, ~40% fewer profile clicks</div></div>
+          <div><div class="gap-cell-label">Quick fix</div><div class="gap-cell-text">Automated post-engagement review request</div></div>
+        </div></div><div class="gap"><div class="gap-title"><span class="gap-num">03</span>No retargeting pixel</div>
+        <div class="gap-grid">
+          <div><div class="gap-cell-label">What's there now</div><div class="gap-cell-text">No Meta or Google pixel detected</div></div>
+          <div><div class="gap-cell-label">What it's costing</div><div class="gap-cell-text">100% of site visitors are unrecoverable once they leave</div></div>
+          <div><div class="gap-cell-label">Quick fix</div><div class="gap-cell-text">Install GTM + Meta pixel this week</div></div>
+        </div></div></div>
+<div class="section"><div class="section-title">What we detected on your site</div><div class="tech-grid"><div class="tech-cell"><div class="tech-cell-row1"><div class="tech-signal">CMS</div>
+        <div class="tech-status good">WordPress</div></div>
+        <div class="tech-rec">Fine. Add a booking plugin, no rebuild needed.</div></div><div class="tech-cell"><div class="tech-cell-row1"><div class="tech-signal">Booking</div>
+        <div class="tech-status miss">Missing</div></div>
+        <div class="tech-rec">No scheduler detected. Biggest single leak.</div></div><div class="tech-cell"><div class="tech-cell-row1"><div class="tech-signal">Retargeting pixel</div>
+        <div class="tech-status miss">Missing</div></div>
+        <div class="tech-rec">Install GTM + Meta to stop losing visitors.</div></div><div class="tech-cell"><div class="tech-cell-row1"><div class="tech-signal">Email capture</div>
+        <div class="tech-status opp">Opportunity</div></div>
+        <div class="tech-rec">Add a simple lead magnet opt-in for non-bookers.</div></div></div></div>
+<div class="section"><div class="section-title">If you only had budget for one channel right now</div>
+  <div class="leadgen-channel">→ B2B Cold Outbound (highest ROI for your stage)</div>
+  <div>You have capacity and a clear niche but rely on referrals. Targeted outbound to local businesses fills the gap predictably.</div>
+  <div class="leadgen-math">Math: 1,500 sends/mo × 3% reply × 25% call = 11 calls. At avg $4,200 engagement = ~$46K MRR pipeline.</div></div>
+<div class="tldr"><div class="tldr-label">If you only read this</div><div>Three fixes, biggest first: put an online scheduler above the fold so after-hours visitors can book, automate review requests to close the gap with the two firms outranking you, and install a retargeting pixel so the visitors you do get are recoverable. Then turn on targeted local outbound to stop depending on referrals. Do it yourself or have us run it under pay-per-qualified-call below.</div></div>
+<div class="cta">
+  <div class="cta-text"><h3>Want us to run this for you?</h3>
+    <p>We build it, you only pay when a qualified call lands on your calendar.</p></div>
+  <div class="cta-actions">
+    <a class="btn btn-primary" href="https://meetings.hubspot.com/deecedigital" onclick="track('Lead')">Book 15 min →</a>
+    <button class="btn btn-ghost" onclick="window.print()">Download</button>
+  </div>
+</div>
+<div class="footer">DeeCe Digital · deecedigital.com · Built for performance. Backed by data.</div></div>
+</div>
+<script>
+function track(ev){try{if(window.fbq)fbq('track',ev);if(window.ttq)ttq.track(ev);if(window.gtag)gtag('event',ev);}catch(e){}}
+var lines=["Pulling LWS Tax & Accounting's online setup...", "Scanning local CPA competitors...", "Finding where the funnel leaks...", "Building your teardown..."];var i=0;var el=document.getElementById('loadline');
+function step(){if(i<lines.length){el.textContent=lines[i++];setTimeout(step,650);}else{
+  document.getElementById('loading').style.display='none';
+  document.getElementById('result').style.display='block';
+  track('ViewContent');
+}}
+setTimeout(step,400);
+</script>
+</body></html>
