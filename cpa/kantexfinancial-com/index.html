@@ -1,0 +1,287 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>KANTEX Financial · Client-Acquisition Funnel Teardown</title><meta property="og:title" content="KANTEX Financial · Client-Acquisition Funnel Teardown"><meta property="og:description" content="A personalized client-acquisition teardown for KANTEX Financial, built by DeeCe Digital."><meta property="og:type" content="website"><meta property="og:image" content="https://teardowns.deecedigital.com/cpa/kantexfinancial-com/og.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://teardowns.deecedigital.com/cpa/kantexfinancial-com/og.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#0A0A1F;--accent:#7060E8;--accent2:#9b8cff;--accent-dk:#5040D0;--panel:#15132a;--line:#ebe9f3;--muted:#8a88a6;--text:#1b1a2e;--miss:#e0245e;--opp:#d97706;--good:#16a34a;--bg:#f4f3fa}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased}
+.progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:50;transition:width .1s}
+.wrap{max-width:920px;margin:0 auto;padding:0 18px 120px}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}
+.reveal.in{opacity:1;transform:none}
+.hero{background:radial-gradient(120% 120% at 0% 0%,#1a1840 0%,var(--navy) 55%);color:#fff;border-radius:0 0 30px 30px;padding:34px 36px 40px;margin-bottom:26px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-80px;top:-80px;width:300px;height:300px;background:radial-gradient(circle,rgba(112,96,232,.35),transparent 70%);pointer-events:none}
+.hero-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;font-size:12px;position:relative;z-index:1}
+.brandmark{font-weight:800;letter-spacing:.04em}
+.scanned{opacity:.7;font-size:11.5px}.scanned b{color:var(--accent2);font-weight:600}
+.hero-main{display:flex;gap:30px;align-items:center;position:relative;z-index:1}
+.hero-copy{flex:1;min-width:0}
+.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent2);font-weight:700;margin-bottom:10px}
+.hero h1{font-size:31px;line-height:1.12;font-weight:800;letter-spacing:-.02em}
+.hero h1 .accent{color:var(--accent2)}
+.verdict{margin-top:14px;font-size:15px;color:#cfcce6;max-width:46ch}
+.gauge{flex-shrink:0;width:150px;height:150px;position:relative;display:flex;align-items:center;justify-content:center}
+.gauge svg{transform:rotate(-90deg)}
+.gauge .num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;width:96px}
+.gauge .num b{font-size:38px;font-weight:800;color:#fff;line-height:1;letter-spacing:-.03em}
+.gauge .num span{display:block;font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2);margin-top:5px;font-weight:700;line-height:1.3}
+.bottomline{margin:22px 36px 0;background:rgba(112,96,232,.13);border:1px solid rgba(155,140,255,.32);border-radius:14px;padding:15px 18px;font-size:14.5px;color:#e9e8f6;position:relative;z-index:1}
+.bottomline .lbl{display:block;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);font-weight:700;margin-bottom:6px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px 26px;margin-bottom:18px;box-shadow:0 2px 10px rgba(10,10,31,.04)}
+.card-h{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-dk);font-weight:800;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.card-h:before{content:"";width:6px;height:6px;border-radius:2px;background:var(--accent)}
+.card-sub{font-size:13.5px;color:#56546f;margin:-10px 0 18px}
+.snapshot{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.snap{background:var(--bg);border-radius:13px;padding:15px}
+.snap .l{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.snap .v{font-size:18px;font-weight:800;color:var(--navy);letter-spacing:-.01em}
+.barrow{display:grid;grid-template-columns:130px 1fr 46px;gap:12px;align-items:center;margin-bottom:11px}
+.barrow .nm{font-size:13px;font-weight:600;color:#3a3852;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.barrow.you .nm{color:var(--accent-dk);font-weight:800}
+.track{height:13px;background:#eeecf6;border-radius:8px;overflow:hidden}
+.fill{height:100%;width:0;border-radius:8px;background:#c9c4e6;transition:width 1.1s cubic-bezier(.2,.8,.2,1)}
+.barrow.you .fill{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.barrow .pct{font-size:13px;font-weight:700;color:#56546f;text-align:right}
+.pattern{margin-top:14px;font-style:italic;color:#56546f;font-size:14px;border-left:3px solid var(--accent);padding-left:12px}
+.gap{border:1px solid var(--line);border-radius:14px;margin-bottom:12px;overflow:hidden;transition:border-color .2s}
+.gap.open{border-color:var(--accent)}
+.gap-head{display:flex;align-items:center;gap:12px;padding:16px 18px;cursor:pointer;user-select:none}
+.sev{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.sev.high{background:var(--miss)}.sev.med{background:var(--opp)}.sev.low{background:var(--good)}
+.gap-head .t{font-weight:700;color:var(--navy);font-size:15.5px;flex:1}
+.gap-head .chev{color:var(--muted);transition:transform .25s;font-size:13px}
+.gap.open .chev{transform:rotate(180deg)}
+.gap-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.gap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:0 18px 18px}
+.gc .gl{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:5px;font-weight:700}
+.gc .gt{font-size:13.5px;color:#3a3852}
+.gc.cost .gt{color:var(--miss);font-weight:600}.gc.fix .gt{color:var(--good);font-weight:600}
+/* lead-gen selector */
+.lg-chips{display:flex;flex-wrap:wrap;gap:9px}
+.chip{border:1.5px solid var(--line);background:#fff;color:#3a3852;border-radius:30px;padding:9px 16px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
+.chip:hover{border-color:var(--accent2)}
+.chip.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.lg-resp{margin-top:16px;font-size:14.5px;color:#3a3852;background:var(--bg);border-radius:12px;padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s}
+.lg-resp.show{padding:15px 16px}
+/* growth model */
+.growth{background:linear-gradient(135deg,#1a1840,var(--navy));color:#fff;border-radius:18px;padding:26px 28px;margin-bottom:18px}
+.growth .gh{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);font-weight:800;margin-bottom:6px}
+.growth .gsub{font-size:13.5px;color:#bfbce0;margin-bottom:22px}
+.gctrl{margin-bottom:18px}
+.gctrl label{display:flex;justify-content:space-between;font-size:13px;color:#cfcce6;margin-bottom:9px}
+.gctrl label b{color:#fff;font-weight:700}
+input[type=range]{-webkit-appearance:none;width:100%;height:6px;border-radius:6px;background:rgba(255,255,255,.18);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;cursor:pointer;box-shadow:0 0 0 5px rgba(112,96,232,.4)}
+.clients-box{text-align:center;margin:24px 0 8px}
+.clients-box .n{font-size:54px;font-weight:800;letter-spacing:-.03em;line-height:1;background:linear-gradient(90deg,#fff,var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.clients-box .l{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2);font-weight:700;margin-top:8px}
+.chan-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:22px}
+.cnow{display:block;font-size:9.5px;font-weight:600;color:#9f9cc8;text-transform:none;letter-spacing:0;margin-top:2px}
+.chan-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:16px}
+.chan-card.best{border-color:var(--accent2);background:rgba(112,96,232,.18);position:relative}
+.chan-card.best:before{content:"Most efficient";position:absolute;top:-9px;left:14px;background:var(--accent2);color:var(--navy);font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:3px 8px;border-radius:20px}
+.chan-card .cl{font-size:12px;font-weight:700;color:#cfcce6;margin-bottom:8px}
+.chan-card .cv{font-size:22px;font-weight:800;color:#fff;letter-spacing:-.02em}
+.chan-card .cu{font-size:11px;color:#9f9cc8;margin-top:4px}
+.funnel-chain{margin-top:18px;font-size:12.5px;color:#bfbce0;background:rgba(0,0,0,.2);border-radius:11px;padding:12px 14px;line-height:1.7}
+.growth-note{font-size:11.5px;color:#8f8cba;margin-top:14px}
+/* automation */
+.auto-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.auto-item:last-child{border-bottom:0}
+.auto-ic{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2));flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px}
+.auto-item .at{font-weight:700;color:var(--navy);font-size:14.5px;margin-bottom:3px}
+.auto-item .ad{font-size:13.5px;color:#56546f}
+/* tech */
+.tech{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.trow{display:flex;gap:12px;align-items:flex-start;background:var(--bg);border-radius:12px;padding:13px 15px}
+.ico{width:22px;height:22px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;margin-top:1px}
+.ico.have{background:var(--good)}.ico.missing{background:var(--miss)}.ico.weak{background:var(--opp)}
+.trow .sig{font-weight:700;color:var(--navy);font-size:13.5px}
+.trow .det{font-size:12.5px;color:#56546f;margin-top:2px}
+.fix-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.fix-card{text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:16px;cursor:pointer;font-family:inherit;transition:all .15s;position:relative}
+.fix-card:hover{border-color:var(--accent2)}
+.fix-card.active{border-color:var(--accent);background:rgba(112,96,232,.06);box-shadow:0 0 0 3px rgba(112,96,232,.12)}
+.fix-card.active:after{content:"✓ selected";position:absolute;top:13px;right:14px;font-size:10px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.04em}
+.fix-card .fl{font-weight:800;color:var(--navy);font-size:14.5px;margin-bottom:5px;padding-right:60px}
+.fix-card .fd{font-size:12.5px;color:#56546f;line-height:1.5}
+.tldr{background:var(--navy);color:#e6e4f5;border-radius:18px;padding:24px 28px;margin-bottom:18px}
+.tldr-l{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);font-weight:700;margin-bottom:10px}
+.cta{position:sticky;bottom:14px;z-index:20;background:linear-gradient(135deg,var(--accent),var(--accent-dk));color:#fff;border-radius:18px;padding:22px 26px;margin-top:24px;display:flex;justify-content:space-between;align-items:center;gap:20px;box-shadow:0 14px 40px rgba(80,64,208,.4)}
+.cta h3{font-size:18px;font-weight:800;margin-bottom:3px}.cta p{font-size:13.5px;opacity:.92}
+.cta-actions{display:flex;gap:10px;flex-shrink:0}
+.btn{display:inline-block;padding:13px 22px;border-radius:11px;font-weight:700;font-size:14px;text-decoration:none;white-space:nowrap;border:0;cursor:pointer;font-family:inherit}
+.btn-primary{background:#fff;color:var(--accent-dk)}.btn-ghost{background:rgba(255,255,255,.16);color:#fff}
+.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:30px}
+#loading{min-height:78vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px}
+.spinner{width:48px;height:48px;border:4px solid #e0ddf0;border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite;margin-bottom:24px}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loadline{color:#56546f;font-size:15px;font-weight:600}
+.load-sub{color:var(--muted);font-size:12.5px;margin-top:8px}
+@media(max-width:700px){.hero-main{flex-direction:column;align-items:flex-start}.snapshot{grid-template-columns:repeat(2,1fr)}.gap-grid,.tech,.chan-grid,.fix-grid{grid-template-columns:1fr}.hero h1{font-size:25px}.barrow{grid-template-columns:96px 1fr 40px}.cta{flex-direction:column;align-items:stretch;text-align:center}.cta-actions{justify-content:center}.bottomline{margin-left:0;margin-right:0}}
+</style></head><body><div class="progress" id="prog"></div><div class="wrap"><div id="loading"><div class="spinner"></div><div id="loadline">Starting analysis...</div><div class="load-sub">Pulling live data for kantexfinancial.com</div></div><div id="result" style="display:none">
+<div class="hero reveal">
+  <div class="hero-top"><div class="brandmark">DeeCe Digital</div>
+    <div class="scanned">Scanned <b>kantexfinancial.com</b> · July 17, 2026</div></div>
+  <div class="hero-main">
+    <div class="hero-copy">
+      <div class="eyebrow">Client-Acquisition Funnel Teardown · prepared for</div>
+      <h1>KANTEX Financial<br><span class="accent">strong services, quiet demand engine</span></h1>
+      <div class="verdict">You have already done the part most firms skip. Kantex is a Certified Profit First practice built around advisory and outsourced CFO work, not just tax prep and cleanup. That is the hard, valuable positioning. The upside sits almost entirely on the demand side: the services are built and clearly explained, they are just not being put in front of enough of the right business owners on a repeatable basis.</div>
+    </div>
+    <div class="gauge" data-score="81">
+      <svg width="150" height="150" viewBox="0 0 150 150">
+        <circle cx="75" cy="75" r="62" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="11"/>
+        <circle id="gaugeArc" cx="75" cy="75" r="62" fill="none" stroke="url(#gg)" stroke-width="11" stroke-linecap="round" stroke-dasharray="389.6" stroke-dashoffset="389.6"/>
+        <defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7060E8"/><stop offset="1" stop-color="#9b8cff"/></linearGradient></defs>
+      </svg>
+      <div class="num"><b data-count="81">0</b><span>Growth opportunity</span></div>
+    </div>
+  </div>
+  <div class="bottomline"><span class="lbl">Bottom line</span>Once an owner lands on your site, Kantex earns the trust. The gap is getting more of the right owners there in the first place without you carving nights out to prospect. The three steps below close most of it.</div>
+</div>
+
+<div class="card reveal"><div class="card-h">Where you stand right now</div><div class="snapshot"><div class="snap"><div class="l">Positioning</div><div class="v">Profit First Certified</div></div><div class="snap"><div class="l">Core offer</div><div class="v">Advisory + Outsourced CFO</div></div><div class="snap"><div class="l">Topeka local pack</div><div class="v">Not listed</div></div><div class="snap"><div class="l">Top rival reviews</div><div class="v">32 (Sparks)</div></div></div></div>
+
+<div class="card reveal"><div class="card-h">Topeka local search presence (Google reviews)</div>
+  <div class="barrow you"><div class="nm">KANTEX Financial (you)</div><div class="track"><div class="fill" data-pct="0"></div></div><div class="pct">0</div></div><div class="barrow "><div class="nm">Sparks Tax &amp; Accounting</div><div class="track"><div class="fill" data-pct="100"></div></div><div class="pct">32</div></div><div class="barrow "><div class="nm">Accounting Center</div><div class="track"><div class="fill" data-pct="31"></div></div><div class="pct">10</div></div><div class="barrow "><div class="nm">Prime Accounting</div><div class="track"><div class="fill" data-pct="15"></div></div><div class="pct">5</div></div><div class="pattern">Local search is not your main channel, and that is fine, but it is a free one you are currently absent from. More telling: none of these Topeka firms own the Profit First lane. They compete on general tax and accounting. Nobody is positioned as the cash-flow and profitability specialist, which is exactly the lane Kantex is already certified for and could own outright.</div></div>
+
+<div class="card reveal"><div class="card-h">3 gaps I'd close first · tap to expand</div><div class="gap"><div class="gap-head" onclick="this.parentNode.classList.toggle('open');var b=this.nextElementSibling;b.style.maxHeight=this.parentNode.classList.contains('open')?b.scrollHeight+'px':0">
+        <span class="sev high"></span><span class="t">New clients ride on referrals you cannot turn up on demand</span><span class="chev">▼</span></div>
+        <div class="gap-body"><div class="gap-grid">
+          <div class="gc"><div class="gl">What's there now</div><div class="gt">Referrals and word of mouth bring in good, well-fit clients. That is a sign the work is strong.</div></div>
+          <div class="gc cost"><div class="gl">What it's costing</div><div class="gt">Growth is capped by whoever happens to refer you this quarter. Your advisory and CFO services can serve far more owners than the referral stream delivers, so the calendar stays lumpy and hard to plan around.</div></div>
+          <div class="gc fix"><div class="gl">Quick fix</div><div class="gt">Add one repeatable outbound channel that points ideal owners, property managers, real estate operators, and founders in your niches, straight at the advisory pages. It runs in the background so growth stops depending on this month&#x27;s referrals.</div></div>
+        </div></div></div><div class="gap"><div class="gap-head" onclick="this.parentNode.classList.toggle('open');var b=this.nextElementSibling;b.style.maxHeight=this.parentNode.classList.contains('open')?b.scrollHeight+'px':0">
+        <span class="sev med"></span><span class="t">The service pages inform, but do not convert</span><span class="chev">▼</span></div>
+        <div class="gap-body"><div class="gap-grid">
+          <div class="gc"><div class="gl">What's there now</div><div class="gt">Clear, well-organized descriptions of Profit First, outsourced CFO, QuickBooks cleanup, and AP work.</div></div>
+          <div class="gc cost"><div class="gl">What it's costing</div><div class="gt">An owner who is ready to talk has to hunt for the next step. Every service page without a visible, low-friction way to book a call quietly leaks people who were one click from a conversation.</div></div>
+          <div class="gc fix"><div class="gl">Quick fix</div><div class="gt">One consistent booking step and a short intake on each service page, so interest turns into a booked call the moment it peaks instead of an hour later when the tab is closed.</div></div>
+        </div></div></div><div class="gap"><div class="gap-head" onclick="this.parentNode.classList.toggle('open');var b=this.nextElementSibling;b.style.maxHeight=this.parentNode.classList.contains('open')?b.scrollHeight+'px':0">
+        <span class="sev med"></span><span class="t">Invisible where owners first look</span><span class="chev">▼</span></div>
+        <div class="gap-body"><div class="gap-grid">
+          <div class="gc"><div class="gl">What's there now</div><div class="gt">Strong national positioning and a certification most local firms do not carry.</div></div>
+          <div class="gc cost"><div class="gl">What it's costing</div><div class="gt">When a Topeka or regional owner searches for an accountant, the local pack is owned by firms with review moats. Sparks sits at 32 reviews, Accounting Center at 10. Kantex is not in that list, so a free, compounding discovery channel goes unused.</div></div>
+          <div class="gc fix"><div class="gl">Quick fix</div><div class="gt">Claim and fill the Google Business Profile, then run a simple review ask to your happiest current clients. Low effort, and it compounds every month once it is running.</div></div>
+        </div></div></div></div>
+
+<div class="card reveal"><div class="card-h">How do most new Kantex clients find you today?</div>
+  <div class="card-sub">Tap what you rely on most today, I'll tell you straight where it leaves you.</div>
+  <div class="lg-chips"><button class="chip" data-i="0">Referrals / word of mouth</button><button class="chip" data-i="1">Profit First directory</button><button class="chip" data-i="2">Website / Google search</button><button class="chip" data-i="3">Networking &amp; partnerships</button></div>
+  <div class="lg-resp" id="lgResp"></div></div>
+
+<div class="growth reveal">
+  <div class="gh">What it takes to hit your number</div>
+  <div class="gsub">Set your numbers. This reverse-engineers how many clients a month you need, and what each channel would take to get there.</div>
+  <div class="gctrl"><label>An average client is worth <b id="cvOut"></b></label><input type="range" id="cvAnnual"></div>
+  <div class="gctrl"><label>You want to be at <b id="tgtOut"></b></label><input type="range" id="tgtMonthly"></div>
+  <div class="clients-box"><div class="n" id="clientsOut">0</div><div class="l">new clients per month to get there</div></div>
+  <div class="chan-grid">
+    <div class="chan-card"><div class="cl">Referrals<span class="cnow">what most firms rely on now</span></div><div class="cv" id="refIntros">0</div><div class="cu">warm intros / mo to line up</div></div>
+    <div class="chan-card best"><div class="cl">Cold email</div><div class="cv" id="ceLeads">0</div><div class="cu">ideal owners / month to contact</div></div>
+    <div class="chan-card"><div class="cl">Google Ads</div><div class="cv" id="gAds">$0</div><div class="cu">est. monthly budget</div></div>
+    <div class="chan-card"><div class="cl">Meta Ads</div><div class="cv" id="mAds">$0</div><div class="cu">est. monthly budget</div></div>
+  </div>
+  <div class="funnel-chain" id="ceChain"></div>
+  <div class="growth-note">Referrals close the best but you can't turn them up on demand, that's why they cap your growth. Cold email is reverse-engineered from typical funnel rates (reply, positive, book, show, close). Paid budgets use cost-per-client for your space (cost-per-lead divided by close rate) with a 25% buffer, shown as a range, and rise with keyword competition and seasonality. Cold outbound is the lowest-cost path you can actually scale, and we only charge per qualified call, so you carry none of the ad risk.</div>
+</div>
+
+<div class="card reveal"><div class="card-h">Automate to take on more clients without more hours</div>
+  <div class="card-sub">A few small automations let you take on more clients without adding hours, which matters when the point is more revenue, not more nights at the desk.</div><div class="auto-item"><div class="auto-ic">⚡</div><div><div class="at">Instant intake and routing</div><div class="ad">A new inquiry auto-books, sends the intake, and lands in your inbox tagged, so nobody who reaches out waits a day for a reply.</div></div></div><div class="auto-item"><div class="auto-ic">⚡</div><div><div class="at">Onboarding on rails</div><div class="ad">A templated QuickBooks and Profit First onboarding sequence so each new client starts the same clean way without you rebuilding it every time.</div></div></div><div class="auto-item"><div class="auto-ic">⚡</div><div><div class="at">Review and referral asks</div><div class="ad">An automatic nudge to happy clients at the right moment, feeding both your Google profile and your referral flow with zero manual chasing.</div></div></div></div>
+
+<div class="card reveal"><div class="card-h">What we detected on your site</div><div class="tech"><div class="trow"><div class="ico have">✓</div><div><div class="sig">Profit First certification</div><div class="det">Certified and stated up front. A real differentiator few local firms carry.</div></div></div><div class="trow"><div class="ico have">✓</div><div><div class="sig">Advisory and outsourced CFO offer</div><div class="det">Higher-value than tax prep and already on the menu, ready to sell to more owners.</div></div></div><div class="trow"><div class="ico have">✓</div><div><div class="sig">QuickBooks Online and BILL stack</div><div class="det">A modern, clean back office that clients trust and that scales.</div></div></div><div class="trow"><div class="ico missing">✕</div><div><div class="sig">Google Business Profile</div><div class="det">Kantex is not in the Topeka local pack. A free discovery channel sitting idle while rivals stack reviews.</div></div></div><div class="trow"><div class="ico missing">✕</div><div><div class="sig">Repeatable outbound channel</div><div class="det">No sign of a steady, non-referral way to reach new ideal owners. This is the single biggest lever.</div></div></div><div class="trow"><div class="ico weak">!</div><div><div class="sig">Review and social-proof engine</div><div class="det">Little visible review volume compared with local firms. Easy to fix with a simple ask to current clients.</div></div></div></div></div>
+
+<div class="tldr reveal"><div class="tldr-l">If you only read this</div><div>Kantex has the rare, valuable part handled: a Certified Profit First practice with advisory and outsourced CFO services that clients trust once they land on the site. What is missing is a steady way to get more of the right owners there. Today that runs on referrals you cannot schedule, service pages that inform but rarely book, and a local profile you are absent from. Close those and growth stops being lumpy. Pick the one fix you want most below, we build it either way, and if it is useful we can map the rest out on a short call.</div></div>
+
+<div class="card reveal"><div class="card-h">Pick one fix, on us</div>
+  <div class="card-sub">No catch. Choose the one you want most and we'll build it free, whether or not we end up working together. Your pick comes with you to the call.</div>
+  <div class="fix-grid"><button class="fix-card" data-label="starter outreach sequence"><div class="fl">starter outreach sequence</div><div class="fd">A ready-to-send email sequence to 25 ideal owners in one of your niches, written in your voice, pointed at the advisory page.</div></button><button class="fix-card" data-label="booking step for your top service page"><div class="fl">booking step for your top service page</div><div class="fd">A clean book-a-call block and short intake designed for whichever service page drives the most interest.</div></button><button class="fix-card" data-label="Google Business Profile tune-up"><div class="fl">Google Business Profile tune-up</div><div class="fd">Your Topeka profile claimed, filled out, and set up with a simple review-ask so it starts compounding.</div></button><button class="fix-card" data-label="one-page demand engine map"><div class="fl">one-page demand engine map</div><div class="fd">A single-page plan showing exactly how the outbound, the site, and the calendar connect for Kantex.</div></button></div></div>
+
+<div class="cta">
+  <div><h3 id="ctaTitle">Let&#x27;s find your highest-leverage move</h3><p>Lead gen, AI and automation, or a quick win, we&#x27;ll map out what actually moves the needle and where to start.</p></div>
+  <div class="cta-actions">
+    <a class="btn btn-primary" id="ctaBtn" href="https://meetings.hubspot.com/deecedigital">Book 15 min →</a>
+    <button class="btn btn-ghost" onclick="window.print()">Save as PDF</button>
+  </div>
+</div>
+<div class="footer">DeeCe Digital · deecedigital.com · Built for performance. Backed by data.</div></div></div><script>window.__CFG__={"score": 81, "lines": ["Pulling KANTEX Financial's online setup...", "Scanning local CPA competitors...", "Finding where the funnel leaks...", "Building your teardown..."], "booking": "https://meetings.hubspot.com/deecedigital", "capture_url": "https://deecebusiness--saas-magnet-capture-web.modal.run", "niche": "cpa", "domain": "kantexfinancial.com", "firm": "KANTEX Financial", "growth": {"value_mode": "annual", "client_value_annual": 12000, "target_monthly": 4000, "cv_min": 6000, "cv_max": 36000, "tgt_min": 2000, "tgt_max": 24000, "funnel": {"reply": 1.5, "positive": 30, "book": 50, "show": 70, "close": 25}, "referral_close": 0.5, "paid": {"google_cpa_low": 4000, "google_cpa_high": 8000, "meta_cpa_low": 2500, "meta_cpa_high": 5000, "buffer": 0.25}}, "leadgen": ["Referrals close the best because trust is pre-loaded, so keep them. The catch is you cannot dial them up when you want to grow. They fill the calendar in waves, not on a schedule. Pair them with one channel you can actually turn up, and referrals become the icing instead of the whole cake.", "The directory is great intent, these are owners already sold on the method, but you are sharing that pool with every other certified firm and only catching the ones who happen to look you up. A direct outbound motion to owners in your niches puts Kantex in front of them before they ever open a directory.", "Good, but inbound search alone means you only meet owners already looking for an accountant this month. Most of your best future clients are not searching yet. Outreach lets you reach them on your timeline, not theirs, and the site then does the closing.", "Partnerships scale well when they are systemized. The gap is usually consistency, a few strong relationships carry all the volume. A light outbound layer to adjacent partners, other advisors, attorneys, bankers, keeps the referral pipe full instead of dependent on a handful of people."]};</script><script>
+var CFG=window.__CFG__;
+var GOAL='';
+function track(ev){try{if(window.fbq)fbq('track',ev);if(window.ttq)ttq.track(ev);if(window.gtag)gtag('event',ev);}catch(e){}}
+function capture(ev,detail,value){
+  if(!CFG.capture_url)return;
+  try{fetch(CFG.capture_url+'/capture',{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,mode:'cors',
+    body:JSON.stringify({niche:CFG.niche,domain:CFG.domain,firm:CFG.firm,event:ev,detail:detail||'',value:value||GOAL,page_url:location.href,user_agent:navigator.userAgent})});}catch(e){}}
+function money(n){return '$'+Math.round(n).toLocaleString('en-US');}
+function commas(n){return Math.round(n).toLocaleString('en-US');}
+window.addEventListener('scroll',function(){var h=document.documentElement;var p=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;var b=document.getElementById('prog');if(b)b.style.width=p+'%';});
+function countUp(el){var t=+el.dataset.count,d=900,s=null;function f(ts){if(!s)s=ts;var p=Math.min((ts-s)/d,1);el.textContent=Math.round(p*t);if(p<1)requestAnimationFrame(f);}requestAnimationFrame(f);}
+function growth(){
+  var G=CFG.growth,ca=+document.getElementById('cvAnnual').value,tm=+document.getElementById('tgtMonthly').value;
+  var deal=G.value_mode==='deal';
+  document.getElementById('cvOut').textContent=deal?money(ca)+' per client':money(ca)+'/yr ('+money(ca/12)+'/mo)';
+  document.getElementById('tgtOut').textContent=money(tm)+'/mo';
+  var clients=deal?Math.max(1,Math.ceil(tm/ca)):Math.max(1,Math.ceil(tm/(ca/12)));
+  document.getElementById('clientsOut').textContent=clients;
+  var F=G.funnel,factor=(F.reply/100)*(F.positive/100)*(F.book/100)*(F.show/100)*(F.close/100);
+  var leads=clients/factor,replies=leads*F.reply/100,pos=replies*F.positive/100,booked=pos*F.book/100,shown=booked*F.show/100;
+  document.getElementById('ceLeads').textContent=commas(leads);
+  document.getElementById('ceChain').textContent='To close '+clients+' a month: '+commas(leads)+' leads contacted → '+commas(replies)+' replies → '+commas(pos)+' positive → '+commas(booked)+' booked → '+commas(shown)+' showed up → '+clients+' signed.';
+  // referrals: close best (~2x cold) but you cannot dial them up on demand
+  var refClose=G.referral_close||0.5;
+  document.getElementById('refIntros').textContent=commas(Math.ceil(clients/refClose));
+  // Jeremy method: spend = clients x cost-per-client (CPL / close%), shown low-high with a buffer,
+  // floored at 2x CPA so smart bidding gets >=15 conversions/mo and isn't starved.
+  var P=G.paid,buf=1+P.buffer;
+  function rangeStr(cpaLow,cpaHigh){var lo=Math.max(2*cpaLow,clients*cpaLow),hi=clients*cpaHigh*buf;
+    return money(lo)+' to '+money(hi);}
+  document.getElementById('gAds').textContent=rangeStr(P.google_cpa_low,P.google_cpa_high);
+  document.getElementById('mAds').textContent=rangeStr(P.meta_cpa_low,P.meta_cpa_high);
+  GOAL='clients='+clients+';value='+ca+';target='+tm;
+}
+function hydrate(){
+  document.querySelectorAll('.reveal').forEach(function(e){e.classList.add('in');});
+  var g=document.querySelector('.gauge'),arc=document.getElementById('gaugeArc');
+  if(g&&arc){var sc=+g.dataset.score,C=389.6;setTimeout(function(){arc.style.transition='stroke-dashoffset 1.4s cubic-bezier(.2,.8,.2,1)';arc.style.strokeDashoffset=C*(1-sc/100);},250);}
+  document.querySelectorAll('[data-count]').forEach(countUp);
+  setTimeout(function(){document.querySelectorAll('.fill').forEach(function(f){f.style.width=f.dataset.pct+'%';});},350);
+  // lead-gen chips
+  document.querySelectorAll('.chip').forEach(function(c){c.addEventListener('click',function(){
+    document.querySelectorAll('.chip').forEach(function(x){x.classList.remove('active');});
+    this.classList.add('active');var r=document.getElementById('lgResp');
+    var lab=this.textContent.trim();
+    r.textContent=CFG.leadgen[+this.dataset.i]||'';r.classList.add('show');
+    r.style.maxHeight=r.scrollHeight+'px';track('Lead');capture('leadgen_select',lab);});});
+  // free-fix selector -> updates CTA (first card pre-selected = most-relevant fix)
+  window.__fix='';
+  function selectFix(card,fire){
+    document.querySelectorAll('.fix-card').forEach(function(x){x.classList.remove('active');});
+    card.classList.add('active');var lb=card.dataset.label,b=CFG.booking;window.__fix=lb;
+    var btn=document.getElementById('ctaBtn');
+    btn.href=b+(b.indexOf('?')>-1?'&':'?')+'fix='+encodeURIComponent(lb);
+    document.getElementById('ctaTitle').textContent='Claim your free '+lb;
+    if(fire){track('Lead');capture('fix_select',lb);}
+  }
+  var fixCards=document.querySelectorAll('.fix-card');
+  fixCards.forEach(function(c){c.addEventListener('click',function(){selectFix(this,true);});});
+  if(fixCards.length)selectFix(fixCards[0],false);
+  // CTA click
+  var cbtn=document.getElementById('ctaBtn');
+  if(cbtn)cbtn.addEventListener('click',function(){track('Lead');capture('cta_click',window.__fix||'book');});
+  // scroll-depth milestone (once at 75%)
+  var hit75=false;
+  window.addEventListener('scroll',function(){if(hit75)return;var h=document.documentElement;
+    if(h.scrollTop/(h.scrollHeight-h.clientHeight)>0.75){hit75=true;capture('scroll','75%');}});
+  // growth calculator
+  var cv=document.getElementById('cvAnnual'),tg=document.getElementById('tgtMonthly');
+  if(cv&&tg){var G=CFG.growth;cv.min=G.cv_min;cv.max=G.cv_max;cv.step=1000;cv.value=G.client_value_annual;
+    tg.min=G.tgt_min;tg.max=G.tgt_max;tg.step=1000;tg.value=G.target_monthly;
+    cv.addEventListener('input',growth);tg.addEventListener('input',growth);growth();}
+  track('ViewContent');capture('view','');
+}
+var i=0,el=document.getElementById('loadline');
+function step(){if(i<CFG.lines.length){el.textContent=CFG.lines[i++];setTimeout(step,620);}else{
+  document.getElementById('loading').style.display='none';
+  document.getElementById('result').style.display='block';hydrate();}}
+setTimeout(step,400);
+</script></body></html>
