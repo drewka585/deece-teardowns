@@ -1,492 +1,483 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
+<title>Venue Readiness Check</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Venue Signal Check</title>
-<meta name="description" content="Measure what your customers' phones actually do inside your building: card tap round trip, time to leave a Google review, and Wi-Fi headroom.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📶</text></svg>">
+<meta name="robots" content="noindex, nofollow">
 
-<!-- TRACKING PIXELS GO HERE. Nothing is installed yet. See the deploy notes in
-     directives/reverse_lead_magnet_saas_magnet.md step 4: Google/Meta/TikTok/LinkedIn
-     on this page is what turns a click into a retargetable lead, and the pre-flight
-     gate will not pass until they are verified firing. Cold-email open/click tracking
-     in the ESP stays OFF regardless. Different layer. -->
+<!-- RETARGETING PIXEL SLOT. Paste Meta + Google Ads tags here once Ari supplies
+     the IDs. Deliberately left empty rather than filled with a placeholder. -->
 
 <style>
-  :root {
-    --ground:   #F4F6F5;
-    --panel:    #FFFFFF;
-    --sunk:     #EEF2F0;
-    --edge:     #DCE4DF;
-    --ink:      #0E1512;
-    --ink-soft: #5A6661;
-    --brand:    #0F9E4F;
-    --brand-dim:#E2F4EA;
-    --warn:     #B76D12;
-    --warn-dim: #FAEFDC;
-    --crit:     #B33427;
-    --crit-dim: #F9E6E3;
-    --shadow:   0 1px 2px rgba(14,21,18,.05), 0 10px 30px rgba(14,21,18,.05);
-    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  :root{
+    --ground:#F4F6F5; --panel:#FFFFFF; --ink:#0E1512; --muted:#5B6B63;
+    --line:#DDE4E0; --brand:#0F9E4F; --brand-ink:#0B7A3D;
+    --good:#0F9E4F; --warn:#B76D12; --crit:#B33427;
+    --good-bg:#E8F5ED; --warn-bg:#FBF0E0; --crit-bg:#FAEAE7;
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --ground:#0B100E; --panel:#141B18; --sunk:#101714; --edge:#26302B;
-      --ink:#E9EFEB; --ink-soft:#96A49D;
-      --brand:#33D977; --brand-dim:#11291C;
-      --warn:#E5A64B; --warn-dim:#2B2317;
-      --crit:#EB7A6B; --crit-dim:#2E1C19;
-      --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 30px rgba(0,0,0,.35);
+  @media (prefers-color-scheme: dark){
+    :root{
+      --ground:#0C110F; --panel:#141B18; --ink:#EAF1ED; --muted:#93A49B;
+      --line:#243029; --brand:#3FD07E; --brand-ink:#7CE3A8;
+      --good:#3FD07E; --warn:#E0A24A; --crit:#F0796A;
+      --good-bg:#12271C; --warn-bg:#2A2013; --crit-bg:#2C1714;
     }
   }
-  :root[data-theme="light"]{--ground:#F4F6F5;--panel:#FFFFFF;--sunk:#EEF2F0;--edge:#DCE4DF;--ink:#0E1512;--ink-soft:#5A6661;--brand:#0F9E4F;--brand-dim:#E2F4EA;--warn:#B76D12;--warn-dim:#FAEFDC;--crit:#B33427;--crit-dim:#F9E6E3;--shadow:0 1px 2px rgba(14,21,18,.05),0 10px 30px rgba(14,21,18,.05);}
-  :root[data-theme="dark"]{--ground:#0B100E;--panel:#141B18;--sunk:#101714;--edge:#26302B;--ink:#E9EFEB;--ink-soft:#96A49D;--brand:#33D977;--brand-dim:#11291C;--warn:#E5A64B;--warn-dim:#2B2317;--crit:#EB7A6B;--crit-dim:#2E1C19;--shadow:0 1px 2px rgba(0,0,0,.45),0 10px 30px rgba(0,0,0,.35);}
+  :root[data-theme="dark"]{
+    --ground:#0C110F; --panel:#141B18; --ink:#EAF1ED; --muted:#93A49B;
+    --line:#243029; --brand:#3FD07E; --brand-ink:#7CE3A8;
+    --good:#3FD07E; --warn:#E0A24A; --crit:#F0796A;
+    --good-bg:#12271C; --warn-bg:#2A2013; --crit-bg:#2C1714;
+  }
+  :root[data-theme="light"]{
+    --ground:#F4F6F5; --panel:#FFFFFF; --ink:#0E1512; --muted:#5B6B63;
+    --line:#DDE4E0; --brand:#0F9E4F; --brand-ink:#0B7A3D;
+    --good:#0F9E4F; --warn:#B76D12; --crit:#B33427;
+    --good-bg:#E8F5ED; --warn-bg:#FBF0E0; --crit-bg:#FAEAE7;
+  }
 
-  *,*::before,*::after{box-sizing:border-box;}
-  html{-webkit-text-size-adjust:100%;}
+  *{box-sizing:border-box}
   body{
     margin:0; background:var(--ground); color:var(--ink);
-    font-family:var(--sans); line-height:1.55; -webkit-font-smoothing:antialiased;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55; -webkit-font-smoothing:antialiased;
   }
-  .eyebrow{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);}
-  .mono{font-family:var(--mono);font-variant-numeric:tabular-nums;}
+  .wrap{max-width:760px; margin:0 auto; padding:32px 20px 72px;
+        display:flex; flex-direction:column; gap:22px}
 
-  /* ---------- masthead ---------- */
-  .top{border-bottom:1px solid var(--edge);background:var(--panel);}
-  .top-in{max-width:70rem;margin:0 auto;padding:.85rem 1.5rem;display:flex;align-items:center;gap:.55rem;}
-  .mark{width:1.25rem;height:1.25rem;border-radius:.25rem;background:var(--brand);display:grid;place-items:center;
-        color:#04150C;font:800 .7rem/1 var(--mono);flex:none;}
-  .top-in .eyebrow{color:var(--ink);}
+  .eyebrow{font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+           color:var(--brand-ink); font-weight:700; margin:0}
+  h1{font-size:clamp(28px,6vw,40px); line-height:1.12; margin:6px 0 0;
+     text-wrap:balance; letter-spacing:-.02em}
+  .lede{color:var(--muted); font-size:17px; margin:0; max-width:56ch}
+  h2{font-size:19px; margin:0 0 10px; letter-spacing:-.01em}
 
-  main{max-width:70rem;margin:0 auto;padding:2.5rem 1.5rem 5rem;}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:22px}
 
-  /* ---------- hero ---------- */
-  .hero{display:grid;grid-template-columns:1fr;gap:2rem;align-items:start;}
-  h1{margin:0;font-size:clamp(1.9rem,5vw,3.1rem);line-height:1.05;letter-spacing:-.032em;font-weight:800;text-wrap:balance;}
-  .lede{margin:.9rem 0 0;font-size:clamp(1rem,1.7vw,1.12rem);color:var(--ink-soft);max-width:34rem;}
+  .standhere{background:var(--warn-bg); border:1px solid var(--warn);
+             border-radius:12px; padding:14px 16px; font-size:15px}
+  .standhere strong{display:block; margin-bottom:2px}
 
-  .standing{
-    margin-top:1.5rem;display:flex;gap:.85rem;align-items:flex-start;
-    background:var(--panel);border:1px solid var(--edge);border-left:3px solid var(--brand);
-    border-radius:.1rem .55rem .55rem .1rem;padding:1rem 1.1rem;max-width:34rem;
-  }
-  .standing svg{flex:none;margin-top:.15rem;}
-  .standing b{display:block;font-size:.98rem;}
-  .standing span{font-size:.87rem;color:var(--ink-soft);}
+  .btn{display:block; width:100%; border:0; border-radius:11px; cursor:pointer;
+       background:var(--brand); color:#04150C; font-weight:700; font-size:17px;
+       padding:16px 20px; text-align:center; text-decoration:none;
+       font-family:inherit; transition:opacity .15s}
+  .btn:hover{opacity:.9}
+  .btn:disabled{opacity:.5; cursor:progress}
+  .btn:focus-visible, a:focus-visible, input:focus-visible, summary:focus-visible{
+    outline:3px solid var(--brand); outline-offset:2px}
 
-  /* score card */
-  .scorecard{
-    background:var(--panel);border:1px solid var(--edge);border-radius:.7rem;
-    box-shadow:var(--shadow);padding:1.4rem 1.4rem 1.5rem;display:flex;flex-direction:column;gap:.7rem;
-  }
-  .sc-top{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;}
-  .pill{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-        padding:.3rem .65rem;border-radius:2rem;border:1px solid currentColor;color:var(--ink-soft);white-space:nowrap;}
-  .score{font:600 clamp(3rem,7vw,4.2rem)/1 var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.04em;}
-  .score small{font-size:1.05rem;color:var(--ink-soft);font-weight:500;letter-spacing:0;}
-  .sc-text{margin:0;font-size:.95rem;color:var(--ink-soft);}
-  .btnrow{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.35rem;}
+  .tests{margin:0; padding:0; list-style:none}
+  .test{display:grid; grid-template-columns:1fr auto; gap:4px 16px;
+        align-items:baseline; padding:16px 0; border-top:1px solid var(--line)}
+  .test:first-child{border-top:0}
+  .test .name{font-weight:650; font-size:16px}
+  .test .why{grid-column:1; color:var(--muted); font-size:14px; line-height:1.45}
+  .test .val{grid-column:2; grid-row:1 / span 2; align-self:center;
+             font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+             font-variant-numeric:tabular-nums; font-size:24px; font-weight:600;
+             white-space:nowrap; color:var(--muted)}
+  .test.is-good .val{color:var(--good)}
+  .test.is-warn .val{color:var(--warn)}
+  .test.is-crit .val{color:var(--crit)}
+  .chip{display:inline-block; margin-top:6px; font-size:11px; font-weight:700;
+        letter-spacing:.08em; text-transform:uppercase; padding:3px 9px;
+        border-radius:999px; background:var(--line); color:var(--muted)}
+  .test.is-good .chip{background:var(--good-bg); color:var(--good)}
+  .test.is-warn .chip{background:var(--warn-bg); color:var(--warn)}
+  .test.is-crit .chip{background:var(--crit-bg); color:var(--crit)}
 
-  .btn{
-    font:700 .92rem/1 var(--sans);padding:.8rem 1.1rem;border-radius:.42rem;border:0;cursor:pointer;
-    background:var(--brand);color:#04150C;text-decoration:none;display:inline-block;
-  }
-  .btn:disabled{opacity:.7;cursor:default;}
-  .btn.ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--edge);font-weight:600;}
-  .btn.ghost:hover{color:var(--ink);border-color:var(--ink-soft);}
-  .btn:focus-visible{outline:3px solid var(--brand);outline-offset:3px;}
+  .verdict{border-radius:14px; padding:22px; border:1px solid var(--line)}
+  .verdict.v-good{background:var(--good-bg); border-color:var(--good)}
+  .verdict.v-mixed{background:var(--warn-bg); border-color:var(--warn)}
+  .verdict.v-poor{background:var(--crit-bg); border-color:var(--crit)}
+  .verdict h2{font-size:22px}
+  .verdict p{margin:0 0 12px}
 
-  /* ---------- tests ---------- */
-  .sec-head{display:flex;align-items:baseline;gap:.9rem;margin:3.5rem 0 1.1rem;}
-  .sec-head h2{margin:0;font-size:1.35rem;letter-spacing:-.022em;}
-  .rule{flex:1;height:1px;background:var(--edge);}
+  .gets{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px}
+  .gets li{position:relative; padding-left:26px; font-size:15px}
+  .gets li::before{content:""; position:absolute; left:6px; top:.62em; width:7px;
+                   height:7px; border-radius:50%; background:var(--brand)}
+  .terms{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; padding-top:16px;
+         border-top:1px solid var(--line)}
+  .term{font-size:12px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+        padding:5px 10px; border-radius:7px; background:var(--good-bg); color:var(--brand-ink)}
+  @media (prefers-color-scheme: dark){ .term{color:var(--brand)} .said{color:var(--brand)} }
+  :root[data-theme="dark"] .term{color:var(--brand)}
+  :root[data-theme="dark"] .said{color:var(--brand)}
 
-  .tests{display:grid;grid-template-columns:1fr;gap:1rem;}
-  .test{
-    background:var(--panel);border:1px solid var(--edge);border-radius:.65rem;box-shadow:var(--shadow);
-    padding:1.15rem 1.2rem 1.25rem;display:flex;flex-direction:column;gap:.85rem;
-    position:relative;overflow:hidden;
-  }
-  .test::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--edge);transition:background .35s ease;}
-  .test[data-state=good]::before{background:var(--brand);}
-  .test[data-state=warn]::before{background:var(--warn);}
-  .test[data-state=crit]::before{background:var(--crit);}
+  .capture{display:flex; gap:9px; flex-wrap:wrap; margin-top:14px}
+  .capture input{flex:1 1 220px; min-width:0; font:inherit; font-size:16px;
+                 padding:13px 14px; border-radius:10px; border:1px solid var(--line);
+                 background:var(--ground); color:var(--ink)}
+  .capture button{flex:0 0 auto; width:auto; padding:13px 20px; font-size:16px}
+  .said{color:var(--brand-ink); font-weight:600; font-size:15px; margin:10px 0 0}
 
-  .t-top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;}
-  .t-name{margin:0;font-size:1.02rem;font-weight:700;letter-spacing:-.012em;}
-  .t-what{margin:.2rem 0 0;font-size:.85rem;color:var(--ink-soft);}
-  .readout{font:600 1.65rem/1.1 var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.025em;
-           text-align:right;white-space:nowrap;}
-  .readout u{text-decoration:none;font-size:.75rem;color:var(--ink-soft);font-weight:500;}
-  .readout[data-pending]{font-size:1.05rem;color:var(--ink-soft);}
+  .method{border:1px solid var(--line); border-radius:12px; background:var(--panel)}
+  .method summary{cursor:pointer; padding:16px 20px; font-weight:650; font-size:15px;
+                  list-style:none; display:flex; justify-content:space-between;
+                  gap:12px; align-items:center}
+  .method summary::-webkit-details-marker{display:none}
+  .method summary::after{content:"\002B"; color:var(--muted); font-size:18px}
+  .method[open] summary::after{content:"\2212"}
+  .method .mbody{padding:0 20px 20px; border-top:1px solid var(--line);
+                 font-size:14.5px; color:var(--muted)}
+  .method .mbody p{margin:14px 0 0}
+  .method .mbody strong{color:var(--ink)}
+  .scroller{overflow-x:auto; margin-top:14px}
+  table{border-collapse:collapse; width:100%; font-size:13px; min-width:340px}
+  th,td{text-align:left; padding:7px 12px 7px 0; border-bottom:1px solid var(--line);
+        white-space:nowrap}
+  th{font-weight:650; color:var(--ink)}
+  td.n{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+       font-variant-numeric:tabular-nums}
 
-  .scale{display:flex;flex-direction:column;gap:.4rem;}
-  .track{position:relative;height:.55rem;border-radius:2rem;background:var(--crit-dim);overflow:hidden;}
-  .zw,.zg{position:absolute;top:0;bottom:0;}
-  .zw{background:var(--warn-dim);} .zg{background:var(--brand-dim);}
-  .needle{position:absolute;top:-.25rem;bottom:-.25rem;width:3px;border-radius:2px;background:var(--ink);
-          left:0;transform:translateX(-1.5px);opacity:0;transition:left .85s cubic-bezier(.22,.9,.26,1),opacity .3s;}
-  .test[data-done] .needle{opacity:1;}
-  .ticks{display:flex;justify-content:space-between;font:.66rem/1 var(--mono);color:var(--ink-soft);font-variant-numeric:tabular-nums;}
-  .t-cost{margin:0;font-size:.87rem;}
-  .bench{margin:0;font-size:.76rem;color:var(--ink-soft);}
-
-  /* ---------- method ---------- */
-  .method{background:var(--panel);border:1px solid var(--edge);border-radius:.65rem;box-shadow:var(--shadow);overflow:hidden;}
-  .method>summary{
-    cursor:pointer;padding:1.1rem 1.2rem;font-weight:700;font-size:1rem;list-style:none;
-    display:flex;align-items:center;justify-content:space-between;gap:1rem;
-  }
-  .method>summary::-webkit-details-marker{display:none;}
-  .method>summary::after{content:"+";font:600 1.3rem/1 var(--mono);color:var(--ink-soft);}
-  .method[open]>summary::after{content:"\2212";}
-  .method>summary:focus-visible{outline:3px solid var(--brand);outline-offset:-3px;}
-  .m-body{padding:0 1.2rem 1.3rem;display:flex;flex-direction:column;gap:1.1rem;border-top:1px solid var(--edge);padding-top:1.2rem;}
-  .m-body p{margin:0;font-size:.9rem;color:var(--ink-soft);max-width:60ch;}
-  .m-body p strong{color:var(--ink);}
-  .steps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.7rem;counter-reset:s;}
-  .steps li{display:flex;gap:.75rem;font-size:.9rem;}
-  .steps li::before{
-    counter-increment:s;content:counter(s);flex:none;width:1.4rem;height:1.4rem;border-radius:50%;
-    background:var(--sunk);border:1px solid var(--edge);display:grid;place-items:center;
-    font:700 .7rem/1 var(--mono);color:var(--ink-soft);margin-top:.1rem;
-  }
-  .rawwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-  table.raw{border-collapse:collapse;width:100%;min-width:24rem;font-size:.82rem;}
-  table.raw th,table.raw td{text-align:left;padding:.5rem .7rem;border-bottom:1px solid var(--edge);}
-  table.raw th{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;}
-  table.raw td:last-child{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;}
-
-  /* ---------- cta ---------- */
-  .cta{margin-top:3.5rem;background:var(--ink);color:var(--ground);border-radius:.7rem;padding:2rem 1.6rem;
-       display:flex;flex-direction:column;gap:.9rem;}
-  .cta h2{margin:0;font-size:clamp(1.3rem,2.6vw,1.7rem);letter-spacing:-.025em;text-wrap:balance;}
-  .cta p{margin:0;font-size:.97rem;opacity:.82;max-width:44ch;}
-  .cta .facts{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.2rem;}
-  .cta .facts span{font:.75rem/1 var(--mono);padding:.45rem .65rem;border-radius:2rem;
-                   border:1px solid rgba(255,255,255,.22);opacity:.9;}
-
-  footer{max-width:70rem;margin:0 auto;padding:0 1.5rem 4rem;color:var(--ink-soft);font-size:.78rem;
-         display:flex;flex-direction:column;gap:.55rem;}
-  footer p{margin:0;max-width:70ch;}
-
-  /* ---------- desktop ---------- */
-  @media (min-width:52rem){
-    main{padding-top:3.5rem;}
-    .hero{grid-template-columns:1.15fr .85fr;gap:3rem;}
-    .tests{grid-template-columns:repeat(3,1fr);}
-    .test{gap:1rem;}
-    .t-top{flex-direction:column;align-items:flex-start;gap:.6rem;}
-    .readout{text-align:left;font-size:2.1rem;}
-    .m-body{display:grid;grid-template-columns:1.1fr .9fr;gap:2rem;align-items:start;}
-    .m-body .span2{grid-column:1/-1;}
-    .cta{flex-direction:row;align-items:center;justify-content:space-between;gap:2.5rem;padding:2.25rem 2rem;}
-    .cta>div{display:flex;flex-direction:column;gap:.7rem;}
-  }
-  @media (prefers-reduced-motion:reduce){
-    .needle,.test::before{transition:none;}
-  }
+  footer{color:var(--muted); font-size:13px; text-align:center}
+  .hidden{display:none !important}
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important; animation:none !important} }
 </style>
-</head>
-<body>
 
-<div class="top"><div class="top-in"><span class="mark">P</span><span class="eyebrow">PayDivy · Connected Venues</span></div></div>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">PayDivy Connected Venues</p>
+    <h1>Venue readiness check</h1>
+  </header>
 
-<main>
+  <p class="lede" id="lede">
+    Three things every customer's phone tries to do inside your building: pay, connect, and
+    leave you a review. This checks whether your building actually lets them. About fifteen
+    seconds, and it installs nothing.
+  </p>
 
-  <section class="hero">
-    <div>
-      <h1 id="head">What your customers' phones are doing in here</h1>
-      <p class="lede">Three things a customer does on their phone inside your building. This measures how long each one takes on the connection you have right now, from this device.</p>
+  <div class="standhere">
+    <strong>Run this standing where your customers stand.</strong>
+    At the counter, at the tables, at the back booth. The back office is usually the one spot
+    in the building with good signal, so testing there tells you nothing.
+  </div>
 
-      <div class="standing">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
-        <div>
-          <b>Run this standing where your customers stand.</b>
-          <span>At the register, at the far table, in the back of the room. Not at the office desk next to the router. The number that matters is the one your customers are living with.</span>
-        </div>
-      </div>
-    </div>
+  <button class="btn" id="run" type="button">Run the check</button>
 
-    <div class="scorecard" aria-live="polite">
-      <div class="sc-top">
-        <span class="eyebrow">Venue score</span>
-        <span class="pill" id="pill">Measuring</span>
-      </div>
-      <div class="score" id="score">··<small> / 100</small></div>
-      <p class="sc-text" id="sctext">Running three measurements against your live connection. About ten seconds.</p>
-      <div class="btnrow">
-        <button class="btn ghost" type="button" id="rerun">Run it again</button>
-      </div>
-    </div>
-  </section>
+  <div class="card hidden" id="results">
+    <h2>What your customers' phones are dealing with</h2>
+    <ul class="tests" id="tests"></ul>
+  </div>
 
-  <div class="sec-head"><h2>The three measurements</h2><span class="rule"></span></div>
-  <div class="tests" id="tests"></div>
+  <div class="verdict hidden" id="verdict"></div>
 
-  <div class="sec-head"><h2>How this actually works</h2><span class="rule"></span></div>
-  <details class="method" id="method">
-    <summary>Open the method and the raw numbers</summary>
-    <div class="m-body">
-      <div style="display:flex;flex-direction:column;gap:1.1rem;">
-        <p><strong>Nothing here is a canned number.</strong> When you loaded this page, your browser opened real connections to our server and we timed them. Every figure above comes out of those timings. Change networks and the results change, which is the easiest way to check us: run it on your wifi, then turn wifi off and run it on cellular. The numbers will move.</p>
-        <ol class="steps">
-          <li>We send seven tiny requests to our server and time each round trip. The first is thrown away, because it pays for connection setup rather than measuring your network. We take the median of the rest, so one hiccup cannot skew it.</li>
-          <li>We download an 800 KB file and time it. That is roughly what a loaded Google review page weighs. The file is random data, so it cannot be compressed and the bytes on the wire are the bytes we counted.</li>
-          <li>Time to a usable review page is those two measurements added up. Four round trips for connection setup and the page itself, plus the measured transfer time, plus a third of a second for the phone to draw it.</li>
-        </ol>
-        <p>What we cannot do is load Google's own page inside this one and time that directly. Browsers block that on purpose. So we measure your connection carrying the same weight of traffic, from the device in your hand, standing where you are standing.</p>
-      </div>
-
-      <div style="display:flex;flex-direction:column;gap:.7rem;">
-        <span class="eyebrow">Raw measurements</span>
-        <div class="rawwrap">
-          <table class="raw">
-            <thead><tr><th>What we recorded</th><th>Value</th></tr></thead>
-            <tbody id="rawrows">
-              <tr><td>Waiting for the run to finish</td><td>··</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p style="font-size:.78rem;">Connection type is whatever the browser will admit to. Safari does not report it, so on an iPhone that row stays unknown. It does not affect the measurements.</p>
-      </div>
-    </div>
+  <details class="method hidden" id="method">
+    <summary>How this actually works, and what it does not measure</summary>
+    <div class="mbody" id="methodBody"></div>
   </details>
 
-  <section class="cta">
-    <div>
-      <h2 id="ctahead">Want us to look at the room properly?</h2>
-      <p>Twenty minutes. We look at what your wireless is doing at the register and what the carriers will pay to fix, because they cover the cost of the install.</p>
-      <div class="facts"><span>$0 setup</span><span>$0 monthly</span><span>No contract changes</span><span>Live in 4 weeks</span></div>
-    </div>
-    <button class="btn" type="button" id="book">Book the 20 minute assessment</button>
-  </section>
-
-</main>
-
-<footer>
-  <p><strong>On the benchmarks.</strong> The 2.5 and 4.0 second marks on the review test are Google's own published thresholds for whether a page counts as fast, needs work, or is slow. The latency and wifi bands are PayDivy benchmarks for a walk in venue, not an industry standard.</p>
-  <p>This is a measurement of your network. It is not a promise about review counts, search rankings, or sales.</p>
-</footer>
+  <footer id="foot"></footer>
+</div>
 
 <script>
 (function(){
   "use strict";
 
-  var qs = new URLSearchParams(location.search);
-  var venue = (qs.get("venue") || qs.get("v") || "").trim().replace(/\s+/g," ").slice(0,60);
-  if (venue) {
-    document.getElementById("head").textContent = "What your customers' phones are doing inside " + venue;
-    document.getElementById("ctahead").textContent = "Want us to look at " + venue + " properly?";
-    document.title = "Signal Check: " + venue;
+  // --- Config -------------------------------------------------------------
+  // BOOKING_URL: set the moment Ari supplies a real booking link. Until then
+  // the CTA falls back to "reply to my email", which is honest and never
+  // renders a dead button. ?book= overrides for testing.
+  var BOOKING_URL = "";
+
+  var SUPA_URL = "https://vfqxnvgqklwxfoomtjrz.supabase.co/rest/v1/venue_checks";
+  var SUPA_KEY = "sb_publishable_hK05QzPUv9d-XFKzG4RcXw_OmRLbd28";
+
+  var SMALL_BYTES = 800 * 1024;   // stands in for a review page payload
+  var FAST_CUTOFF = 1.2;          // secs, below which we re-measure on 6MB
+  var SETUP_RTTS = 4;             // DNS + TCP + TLS + first request
+  var RENDER_ALLOWANCE = 0.3;     // secs of phone-side rendering
+
+  var q = new URLSearchParams(location.search);
+  var TOKEN = (q.get("k") || "").slice(0, 64);
+  var VENUE = (q.get("venue") || q.get("v") || "").slice(0, 200);
+  if (q.get("book")) BOOKING_URL = q.get("book");
+
+  var raw = { samples: [], token: TOKEN || null, venue: VENUE || null };
+  var scores = {};
+  var seq = 0;
+
+  var $ = function(id){ return document.getElementById(id); };
+  function bust(p){ return p + "?c=" + Math.floor(performance.now()) + "_" + (seq++); }
+  function median(a){
+    var s = a.slice().sort(function(x,y){ return x - y; }), m = s.length >> 1;
+    return s.length % 2 ? s[m] : (s[m-1] + s[m]) / 2;
+  }
+  function grade(v, good, warn){ return v <= good ? "good" : (v <= warn ? "warn" : "crit"); }
+  function gradeUp(v, good, warn){ return v >= good ? "good" : (v >= warn ? "warn" : "crit"); }
+  function esc(s){ return String(s).replace(/[<>&"]/g, ""); }
+
+  if (VENUE) {
+    $("lede").insertAdjacentHTML("afterbegin", "<strong>" + esc(VENUE) + "</strong>. ");
   }
 
-  var PAYLOAD_BYTES = 800 * 1024;
-  var RENDER_ALLOWANCE = 0.3;
-  var SETUP_RTTS = 4;
-
-  var TESTS = [
-    { key:"latency", name:"Card tap round trip", unit:"ms", min:0, max:400,
-      good:100, warn:250, lowerBetter:true, ticks:["0","100","250","400+"],
-      what:"How fast the network answers. A tap payment waits on this before it approves.",
-      bench:"PayDivy benchmark: under 100 ms is healthy.",
-      cost:{ good:"Taps approve on the first try.",
-             warn:"This is where a tap starts needing a second attempt.",
-             crit:"At this latency the reader hesitates and customers re-tap." } },
-
-    { key:"review", name:"Time to leave a review", unit:"s", min:0, max:6,
-      good:2.5, warn:4, lowerBetter:true, ticks:["0","2.5","4.0","6+"],
-      what:"How long from tapping your review link to a page they can actually type into.",
-      bench:"Google calls under 2.5 s fast and over 4.0 s slow.",
-      cost:{ good:"A customer can leave a review before they walk out.",
-             warn:"Most people give up somewhere in here and never post it.",
-             crit:"The review does not happen at the table, so it never happens." } },
-
-    { key:"throughput", name:"Wi-Fi headroom", unit:"Mbps", min:0, max:60,
-      good:25, warn:5, lowerBetter:false, ticks:["0","5","25","60+"],
-      what:"Usable bandwidth on this connection, shared with your POS, order pads and back office.",
-      bench:"PayDivy benchmark: 25 Mbps and up is comfortable.",
-      cost:{ good:"Room for guests and your own equipment at the same time.",
-             warn:"Your guests and your POS are competing for the same air.",
-             crit:"This is a congested room. Everything on it feels slow." } }
-  ];
-
-  var results = {}, raw = {};
-
-  function stateOf(t,v){
-    if(v===null||!isFinite(v)) return "warn";
-    return t.lowerBetter ? (v<=t.good?"good":(v<=t.warn?"warn":"crit"))
-                         : (v>=t.good?"good":(v>=t.warn?"warn":"crit"));
-  }
-  function posOf(t,v){
-    return Math.max(1.5, Math.min(98.5, ((v-t.min)/(t.max-t.min))*100));
-  }
-
-  var host = document.getElementById("tests");
-  TESTS.forEach(function(t){
-    var g = posOf(t,t.good), w = posOf(t,t.warn), zg, zw;
-    if(t.lowerBetter){ zg="left:0;width:"+g+"%"; zw="left:"+g+"%;width:"+(w-g)+"%"; }
-    else            { zg="left:"+g+"%;right:0";  zw="left:"+w+"%;width:"+(g-w)+"%"; }
-
-    var el = document.createElement("section");
-    el.className="test"; el.id="t-"+t.key;
-    el.innerHTML =
-      '<div class="t-top">'+
-        '<div><p class="t-name">'+t.name+'</p><p class="t-what">'+t.what+'</p></div>'+
-        '<div class="readout" data-pending="1" id="r-'+t.key+'">measuring</div>'+
-      '</div>'+
-      '<div class="scale"><div class="track">'+
-        '<div class="zw" style="'+zw+'"></div><div class="zg" style="'+zg+'"></div>'+
-        '<div class="needle" id="n-'+t.key+'"></div>'+
-      '</div><div class="ticks">'+t.ticks.map(function(x){return "<span>"+x+"</span>";}).join("")+'</div></div>'+
-      '<p class="t-cost" id="c-'+t.key+'"></p>'+
-      '<p class="bench">'+t.bench+'</p>';
-    host.appendChild(el);
-  });
-
-  function paint(t,v){
-    var s=stateOf(t,v), card=document.getElementById("t-"+t.key), read=document.getElementById("r-"+t.key);
-    var col = s==="good"?"var(--brand)":(s==="warn"?"var(--warn)":"var(--crit)");
-    card.setAttribute("data-state",s); card.setAttribute("data-done","1");
-    read.removeAttribute("data-pending"); read.style.color=col;
-    read.innerHTML = (t.unit==="s"? v.toFixed(1) : Math.round(v)) + ' <u>'+t.unit+'</u>';
-    document.getElementById("n-"+t.key).style.left = posOf(t,v)+"%";
-    var c=document.getElementById("c-"+t.key);
-    c.textContent = t.cost[s];
-    c.style.color = s==="good" ? "var(--ink-soft)" : col;
-    results[t.key]={value:v,state:s};
-  }
-
-  function bust(p){ return p + "?_=" + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
-
-  function probe(){
-    var t0=performance.now();
-    return fetch(bust("ping.txt"),{method:"GET",cache:"no-store"})
+  // --- Measurement --------------------------------------------------------
+  function ping(){
+    var t0 = performance.now();
+    return fetch(bust("ping.txt"), { method:"GET", cache:"no-store" })
       .then(function(r){ return r.text(); })
-      .then(function(){ return performance.now()-t0; })
+      .then(function(){ return performance.now() - t0; })
       .catch(function(){ return null; });
   }
-  function median(a){
-    var v=a.filter(function(x){return x!==null&&isFinite(x);}).sort(function(p,q){return p-q;});
-    if(!v.length) return null;
-    var m=Math.floor(v.length/2);
-    return v.length%2 ? v[m] : (v[m-1]+v[m])/2;
-  }
 
+  // Seven round trips. The first is discarded because it pays for DNS, TCP and
+  // TLS setup and is not representative of a warm connection. Median of the
+  // remaining six, so a single hiccup cannot dominate the number.
   function measureLatency(){
-    return probe().then(function(){
-      var runs=[];
+    return ping().then(function(warm){
+      raw.warmup = warm;
+      var runs = [];
       function step(i){
-        if(!i) return Promise.resolve();
-        return probe().then(function(ms){ runs.push(ms); return step(i-1); });
+        if (!i) return Promise.resolve();
+        return ping().then(function(ms){ if (ms !== null) runs.push(ms); return step(i - 1); });
       }
       return step(6).then(function(){
-        raw.samples = runs.filter(function(x){return x!==null;}).map(function(x){return Math.round(x);});
-        return median(runs);
+        raw.samples = runs;
+        raw.median = runs.length ? median(runs) : null;
+        return raw.median;
       });
     });
   }
 
-  function measureTransfer(){
-    var t0=performance.now();
-    return fetch(bust("payload.bin"),{cache:"no-store"})
+  function timedGet(path){
+    var t0 = performance.now();
+    return fetch(bust(path), { cache:"no-store" })
       .then(function(r){ return r.arrayBuffer(); })
-      .then(function(buf){
-        var secs=(performance.now()-t0)/1000, bytes=buf.byteLength||PAYLOAD_BYTES;
-        raw.bytes=bytes; raw.transferSecs=secs;
-        if(secs<=0) return null;
-        return { secs:secs, mbps:(bytes*8)/secs/1e6 };
-      })
-      .catch(function(){ return null; });
+      .then(function(buf){ return { secs:(performance.now() - t0) / 1000, bytes:buf.byteLength }; });
   }
 
-  function renderRaw(){
-    var c = navigator.connection||navigator.mozConnection||navigator.webkitConnection;
-    var rows = [
-      ["Round trip samples (ms)", raw.samples&&raw.samples.length ? raw.samples.join("  ") : "none"],
-      ["Median round trip", raw.median!=null ? Math.round(raw.median)+" ms" : "unknown"],
-      ["Bytes downloaded", raw.bytes!=null ? raw.bytes.toLocaleString()+" B" : "unknown"],
-      ["Download time", raw.transferSecs!=null ? raw.transferSecs.toFixed(2)+" s" : "unknown"],
-      ["Measured throughput", results.throughput ? results.throughput.value.toFixed(1)+" Mbps" : "unknown"],
-      ["Setup round trips assumed", SETUP_RTTS+"×"],
-      ["Render allowance added", RENDER_ALLOWANCE.toFixed(2)+" s"],
-      ["Browser connection type", c&&c.effectiveType ? c.effectiveType : "not reported"],
-      ["Measured at", new Date().toLocaleTimeString()]
-    ];
-    document.getElementById("rawrows").innerHTML = rows.map(function(r){
-      return "<tr><td>"+r[0]+"</td><td>"+r[1]+"</td></tr>";
+  // Adaptive, and this matters. A single 800KB file cannot saturate a fast
+  // link: TCP slow start needs several round trips to ramp up, so on a healthy
+  // connection the transfer finishes before it ever reaches full speed and the
+  // reading caps out around 20 Mbps no matter how good the line really is.
+  // That would flag excellent venues as needing help, which is exactly how a
+  // tool like this loses credibility. So: measure small first, and only if it
+  // came back fast re-measure on a 6MB file over the now-warm connection. Slow
+  // connections never touch the big file and are never made to wait for it.
+  function measureTransfer(){
+    return timedGet("payload.bin").then(function(small){
+      raw.small = small;
+      if (small.secs >= FAST_CUTOFF) { raw.usedLarge = false; return small; }
+      return timedGet("payload-large.bin")
+        .then(function(large){ raw.large = large; raw.usedLarge = true; return large; })
+        .catch(function(){ raw.usedLarge = false; return small; });
+    }).then(function(used){
+      // One round trip of the elapsed time was the request itself, not
+      // throughput. Subtract it, floored so a noisy sample cannot invert it.
+      var rtt = (raw.median || 0) / 1000;
+      var eff = Math.max(used.secs - rtt, used.secs * 0.5);
+      raw.effSecs = eff;
+      return { mbps:(used.bytes * 8) / eff / 1e6, bytes:used.bytes, secs:used.secs };
+    });
+  }
+
+  // --- Rendering ----------------------------------------------------------
+  var TESTS = [
+    { key:"latency", name:"Network response time",
+      why:"A tap payment waits on a round trip like this one before it approves. Long waits are what turn one tap into two.",
+      fmt:function(v){ return Math.round(v) + " ms"; } },
+    { key:"review", name:"Time to load your review page",
+      why:"Estimated. This is how long a customer stares at a spinner after tapping through to leave you a review, and roughly when they give up.",
+      fmt:function(v){ return v.toFixed(1) + " s"; } },
+    { key:"mbps", name:"Connection headroom",
+      why:"What is left for guest phones once your register, order pads and back office have taken their share.",
+      fmt:function(v){ return v.toFixed(0) + " Mbps"; } }
+  ];
+  var LABEL = { good:"Healthy", warn:"Watch", crit:"Needs work" };
+
+  function paint(t, value, cls){
+    scores[t.key] = { value:value, cls:cls };
+    $("tests").insertAdjacentHTML("beforeend",
+      '<li class="test is-' + cls + '">' +
+        '<div class="name">' + t.name + '</div>' +
+        '<div class="val">' + t.fmt(value) + '</div>' +
+        '<div class="why">' + t.why + '<br><span class="chip">' + LABEL[cls] + '</span></div>' +
+      '</li>');
+  }
+
+  // --- Verdict + CTA ------------------------------------------------------
+  // Both paths lead to a call, for genuinely different and genuinely true
+  // reasons. The good-result reason is the important one: this tool measures
+  // the Wi-Fi THIS device is on, while customers walk in on carrier data, and
+  // solid broadband makes a venue a BETTER carrier-offload candidate, not a
+  // worse one, because the venue's line is what carries the offloaded traffic.
+  // That is the real economics of the product, not a consolation prize.
+  function ctaHtml(){
+    if (BOOKING_URL) {
+      return '<a class="btn" href="' + esc(BOOKING_URL) +
+             '" target="_blank" rel="noopener">Book the walkthrough</a>';
+    }
+    return '<a class="btn" href="#" onclick="return false">' +
+           'Reply to my email and I will send times</a>';
+  }
+
+  var OFFER =
+    '<ul class="gets">' +
+      '<li>A dedicated carrier signal inside the building, so phones stop hunting for bars</li>' +
+      '<li>Tap, Apple Pay, Google Pay and QR landing on the first try instead of the second</li>' +
+      '<li>A branded splash that turns a guest joining your Wi-Fi into a check-in and a review prompt</li>' +
+      '<li>Passpoint auto-connect, so nobody asks you for the password again</li>' +
+      '<li>Foot traffic analytics on who is actually in the room</li>' +
+      '<li>A processing audit that can put a new smart terminal on your counter at no charge</li>' +
+    '</ul>' +
+    '<div class="terms">' +
+      '<span class="term">$0 setup</span><span class="term">$0 monthly</span>' +
+      '<span class="term">No lock-in</span><span class="term">Live in ~4 weeks</span>' +
+    '</div>';
+
+  var COPY = {
+    poor: { cls:"v-poor", h:"This is the problem Connected Venues exists to fix",
+      p:["Your building is slow enough that customers are feeling it. That is the same signal " +
+         "your card reader, your order pads and every guest phone in the room are all sharing.",
+         "The carriers pay to put their own network inside venues like yours, because every " +
+         "building they light up makes their coverage map easier to sell. That is why none of " +
+         "this costs you anything. Here is what goes in:"] },
+    mixed: { cls:"v-mixed", h:"Workable, but your customers are feeling the edges",
+      p:["Nothing here is broken. Worth knowing that you just measured a fairly quiet network. " +
+         "Add sixty phones at dinner and the weakest number above is the one that gives out first.",
+         "The carriers pay to put their own network inside venues like yours, because every " +
+         "building they light up makes their coverage map easier to sell. That is why none of " +
+         "this costs you anything. Here is what goes in:"] },
+    good: { cls:"v-good", h:"Good result, and it makes you a better candidate, not a worse one",
+      p:["Two things worth knowing. First, you just tested the Wi-Fi this device is on. Your " +
+         "customers walk in on their carrier, and in-building cellular is a separate signal " +
+         "path entirely, which is the one that actually dies behind concrete and glass. " +
+         "Second, a carrier will only put their network inside a building that already has " +
+         "solid internet behind it, because your line is what carries their traffic. You have " +
+         "that. Plenty of the buildings we check do not.",
+         "So this is not a conversation about fixing your speed. It is about what a venue with " +
+         "your backhaul can be paid to host, and what comes with it:"] }
+  };
+
+  function renderVerdict(v){
+    var c = COPY[v], el = $("verdict");
+    el.className = "verdict " + c.cls;
+    el.innerHTML =
+      "<h2>" + c.h + "</h2>" +
+      c.p.map(function(t){ return "<p>" + t + "</p>"; }).join("") +
+      OFFER +
+      '<div style="margin-top:20px">' + ctaHtml() + '</div>' +
+      '<div class="capture">' +
+        '<input id="email" type="email" inputmode="email" autocomplete="email" ' +
+               'aria-label="Your email" placeholder="Email me these numbers">' +
+        '<button class="btn" id="send" type="button">Send</button>' +
+      '</div>' +
+      '<p class="said hidden" id="said">Sent. I will follow up with the walkthrough.</p>';
+    el.classList.remove("hidden");
+
+    $("send").addEventListener("click", function(){
+      var e = $("email").value.trim();
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)) { $("email").focus(); return; }
+      record(v, e);
+      $("said").classList.remove("hidden");
+      $("email").disabled = true;
+      $("send").disabled = true;
+    });
+  }
+
+  function renderMethod(){
+    var used = raw.usedLarge ? raw.large : raw.small;
+    var rows = raw.samples.map(function(ms, i){
+      return "<tr><td>Round trip " + (i + 1) + "</td><td class='n'>" + ms.toFixed(1) + " ms</td></tr>";
     }).join("");
+    var kb = Math.round(SMALL_BYTES / 1024);
+    $("methodBody").innerHTML =
+      "<p><strong>Network response time.</strong> Seven requests for a one byte file. The " +
+      "first is thrown away because it pays for DNS, TCP and TLS setup. The number shown is " +
+      "the median of the remaining six.</p>" +
+      "<p><strong>Time to load your review page.</strong> This one is <strong>estimated, not " +
+      "stopwatched.</strong> It is your measured round trip times four, covering DNS, TCP, TLS " +
+      "and the first request, plus the measured time to actually pull " + kb + "KB down, plus " +
+      "0.3s for the phone to draw the page. The " + kb + "KB stands in for a review page, and " +
+      "it is a conservative stand-in because a real one on mobile is often larger. It is " +
+      "judged against Google's own published page speed thresholds, not ours: under 2.5s good, " +
+      "2.5 to 4.0s needs improvement, over 4.0s poor.</p>" +
+      "<p><strong>Connection headroom.</strong> A timed download. We start at " + kb + "KB, and " +
+      "if that came back quickly we run it again on a 6MB file, because a small file finishes " +
+      "before a fast connection has reached full speed and would under-report you. One round " +
+      "trip is subtracted, since that part was the request and not the transfer.</p>" +
+      "<p><strong>What this does not measure.</strong> It does not test in-building cellular, " +
+      "which is what your customers are actually on. It does not run a real card authorization, " +
+      "which also crosses the card networks and your issuing bank. And it is one device at one " +
+      "moment, not sixty phones on a Friday night.</p>" +
+      '<div class="scroller"><table><thead><tr><th>Measurement</th><th>Value</th></tr></thead><tbody>' +
+        "<tr><td>Warm-up (discarded)</td><td class='n'>" +
+          (raw.warmup == null ? "failed" : raw.warmup.toFixed(1) + " ms") + "</td></tr>" +
+        rows +
+        "<tr><td><strong>Median round trip</strong></td><td class='n'><strong>" +
+          (raw.median == null ? "n/a" : raw.median.toFixed(1) + " ms") + "</strong></td></tr>" +
+        "<tr><td>Bytes downloaded</td><td class='n'>" + used.bytes.toLocaleString() + "</td></tr>" +
+        "<tr><td>Download time</td><td class='n'>" + used.secs.toFixed(2) + " s</td></tr>" +
+        "<tr><td>Adaptive 6MB re-run</td><td class='n'>" + (raw.usedLarge ? "yes" : "no") + "</td></tr>" +
+        "<tr><td>Setup round trips assumed</td><td class='n'>" + SETUP_RTTS + "</td></tr>" +
+        "<tr><td>Render allowance</td><td class='n'>" + RENDER_ALLOWANCE.toFixed(1) + " s</td></tr>" +
+        "<tr><td>Browser connection type</td><td class='n'>" +
+          ((navigator.connection && navigator.connection.effectiveType) || "not reported") +
+        "</td></tr>" +
+      "</tbody></table></div>";
+    $("method").classList.remove("hidden");
   }
 
-  function verdict(){
-    var rank={good:0,warn:1,crit:2}, worst="good", n=0, sum=0;
-    TESTS.forEach(function(t){
-      var r=results[t.key]; if(!r) return;
-      n++; sum += r.state==="good"?100:(r.state==="warn"?62:28);
-      if(rank[r.state]>rank[worst]) worst=r.state;
-    });
-    if(!n) return;
-    var score=Math.round(sum/n);
-    var col = worst==="good"?"var(--brand)":(worst==="warn"?"var(--warn)":"var(--crit)");
-    var el=document.getElementById("score"), pill=document.getElementById("pill");
-    el.innerHTML = score+'<small> / 100</small>'; el.style.color=col;
-    pill.textContent = worst==="good"?"Healthy":(worst==="warn"?"Needs a look":"Costing you customers");
-    pill.style.color=col;
-    document.getElementById("sctext").textContent =
-      worst==="good"
-        ? "This spot is in good shape. Worth running it again at the far table and at your busiest hour, because a full room is a different network."
-        : worst==="warn"
-          ? "Your customers are right at the edge of where things fail quietly. Nobody complains about this. They just tap twice and skip the review."
-          : "Your customers are having a bad time on their phones in here, and not one of them is going to mention it to you.";
+  // --- Capture ------------------------------------------------------------
+  // Fire and forget. A failed write must never break the page for the visitor.
+  function record(verdict, email){
+    try {
+      fetch(SUPA_URL, {
+        method:"POST",
+        headers:{ "Content-Type":"application/json", "apikey":SUPA_KEY,
+                  "Authorization":"Bearer " + SUPA_KEY, "Prefer":"return=minimal" },
+        body: JSON.stringify({
+          token: TOKEN || null,
+          client_id: "provident",
+          venue: VENUE || null,
+          verdict: verdict,
+          latency_ms: scores.latency ? Math.round(scores.latency.value) : null,
+          review_secs: scores.review ? Number(scores.review.value.toFixed(2)) : null,
+          mbps: scores.mbps ? Number(scores.mbps.value.toFixed(1)) : null,
+          email: email || null,
+          user_agent: navigator.userAgent.slice(0, 400),
+          raw: raw
+        })
+      }).catch(function(){});
+    } catch (e) {}
   }
 
-  function reset(){
-    TESTS.forEach(function(t){
-      var card=document.getElementById("t-"+t.key), r=document.getElementById("r-"+t.key);
-      card.removeAttribute("data-state"); card.removeAttribute("data-done");
-      r.setAttribute("data-pending","1"); r.textContent="measuring"; r.style.color="";
-      document.getElementById("c-"+t.key).textContent="";
-    });
-    results={}; raw={};
-    var el=document.getElementById("score");
-    el.innerHTML='··<small> / 100</small>'; el.style.color="";
-    var pill=document.getElementById("pill");
-    pill.textContent="Measuring"; pill.style.color="var(--ink-soft)";
-    document.getElementById("sctext").textContent="Running three measurements against your live connection. About ten seconds.";
-  }
+  // --- Run ----------------------------------------------------------------
+  $("run").addEventListener("click", function(){
+    var btn = $("run");
+    btn.disabled = true;
+    btn.textContent = "Checking the network…";
+    $("tests").innerHTML = "";
+    $("results").classList.remove("hidden");
+    $("verdict").classList.add("hidden");
+    $("method").classList.add("hidden");
 
-  function run(){
-    var btn=document.getElementById("rerun");
-    btn.disabled=true; reset();
-
-    measureLatency().then(function(ms){
-      raw.median=ms;
-      if(ms!==null) paint(TESTS[0],ms);
+    measureLatency().then(function(med){
+      if (med == null) throw new Error("no network");
+      paint(TESTS[0], med, grade(med, 100, 250));
+      btn.textContent = "Measuring the connection…";
       return measureTransfer();
     }).then(function(tr){
-      if(tr){
-        paint(TESTS[2],tr.mbps);
-        if(raw.median!==null&&raw.median!=null){
-          paint(TESTS[1], (raw.median*SETUP_RTTS)/1000 + tr.secs + RENDER_ALLOWANCE);
-        }
-      }
-      verdict(); renderRaw();
-      btn.disabled=false;
+      var reviewSecs = (raw.median * SETUP_RTTS) / 1000 + raw.small.secs + RENDER_ALLOWANCE;
+      paint(TESTS[1], reviewSecs, grade(reviewSecs, 2.5, 4.0));
+      paint(TESTS[2], tr.mbps, gradeUp(tr.mbps, 25, 5));
+
+      var all = [scores.latency.cls, scores.review.cls, scores.mbps.cls];
+      var v = all.indexOf("crit") > -1 ? "poor" : (all.indexOf("warn") > -1 ? "mixed" : "good");
+      renderVerdict(v);
+      renderMethod();
+      record(v, null);
+
+      btn.textContent = "Run it again";
+      btn.disabled = false;
+      $("foot").textContent = "Measured " + new Date().toLocaleString() +
+        (VENUE ? " at " + VENUE : "") + ".";
     }).catch(function(){
-      renderRaw(); btn.disabled=false;
+      $("tests").innerHTML =
+        "<li class='test'><div class='name'>Could not reach the network</div>" +
+        "<div class='why'>Check that this device is online, then try again.</div></li>";
+      btn.textContent = "Try again";
+      btn.disabled = false;
     });
-  }
-
-  document.getElementById("rerun").addEventListener("click",run);
-  document.getElementById("book").addEventListener("click",function(){
-    this.textContent="Reply to the email with a time and we will hold it.";
-    this.disabled=true;
   });
-
-  run();
 })();
 </script>
-</body>
-</html>
