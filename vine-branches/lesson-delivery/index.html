@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Three ways the daily lesson can reach a member's phone, with costs and trade-offs.">
+<style>*{margin:0;padding:0}img{max-width:100%}</style>
+<title>Daily Lesson Delivery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap">
+</head>
+<body>
+
+<style>
+:root{
+  --ground:#F1F3F4; --surface:#FBFCFC; --surface-2:#E9ECEE;
+  --ink:#151A20; --ink-2:#3C4854; --muted:#6B7580;
+  --rule:#D6DBDE; --rule-2:#C2CACF;
+  --accent:#9C6B31; --accent-soft:#F0E4D3;
+  --slate:#232B3A;
+  --bubble-in:#FFFFFF; --bubble-in-ink:#1A1F26;
+  --bubble-out:#DDE6E2; --bubble-out-ink:#1A2420;
+  --phone-screen:#E4E8E9; --phone-shell:#2A323B;
+  --good:#2F6B52; --warn:#8A6A22; --bad:#8C3B34;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#13171B; --surface:#1B2128; --surface-2:#232A32;
+    --ink:#E7EAEC; --ink-2:#BAC3CB; --muted:#8D98A3;
+    --rule:#2B333B; --rule-2:#3A444E;
+    --accent:#D6A263; --accent-soft:#33291C;
+    --slate:#C3CCD6;
+    --bubble-in:#242C34; --bubble-in-ink:#E4E8EB;
+    --bubble-out:#2C3A38; --bubble-out-ink:#DCE6E2;
+    --phone-screen:#171D22; --phone-shell:#0C1013;
+    --good:#6FB795; --warn:#D2AC57; --bad:#D98079;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#13171B; --surface:#1B2128; --surface-2:#232A32;
+  --ink:#E7EAEC; --ink-2:#BAC3CB; --muted:#8D98A3;
+  --rule:#2B333B; --rule-2:#3A444E;
+  --accent:#D6A263; --accent-soft:#33291C;
+  --slate:#C3CCD6;
+  --bubble-in:#242C34; --bubble-in-ink:#E4E8EB;
+  --bubble-out:#2C3A38; --bubble-out-ink:#DCE6E2;
+  --phone-screen:#171D22; --phone-shell:#0C1013;
+  --good:#6FB795; --warn:#D2AC57; --bad:#D98079;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px; margin:0 auto; padding:56px 28px 96px}
+
+/* ---------- masthead ---------- */
+.eyebrow{
+  font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:11.5px; font-weight:500;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin:0 0 20px;
+}
+h1{
+  font-family:Newsreader,Georgia,serif; font-weight:500; font-size:clamp(2.4rem,5.4vw,3.6rem);
+  line-height:1.06; letter-spacing:-.015em; margin:0 0 20px; text-wrap:balance; color:var(--ink);
+}
+.standfirst{
+  font-family:Newsreader,Georgia,serif; font-size:clamp(1.1rem,2vw,1.32rem); line-height:1.62;
+  color:var(--ink-2); max-width:60ch; margin:0;
+}
+.masthead{border-bottom:1px solid var(--rule); padding-bottom:44px; margin-bottom:44px}
+
+/* ---------- constraint note ---------- */
+.note{
+  display:grid; grid-template-columns:auto 1fr; gap:0 26px;
+  background:var(--surface); border:1px solid var(--rule);
+  border-left:2px solid var(--accent); padding:26px 28px; margin:0 0 60px;
+}
+.note-label{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:600; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--accent); white-space:nowrap; padding-top:4px;
+}
+.note p{margin:0 0 12px; max-width:64ch; color:var(--ink-2); font-size:15.2px}
+.note p:last-child{margin-bottom:0}
+.note strong{color:var(--ink); font-weight:600}
+@media (max-width:640px){
+  .note{grid-template-columns:1fr; gap:14px}
+}
+
+/* ---------- section heads ---------- */
+.sec-head{margin:0 0 32px}
+h2{
+  font-family:Newsreader,Georgia,serif; font-weight:500; font-size:clamp(1.6rem,3vw,2.1rem);
+  line-height:1.18; letter-spacing:-.01em; margin:0 0 10px; color:var(--ink); text-wrap:balance;
+}
+.sec-head p{margin:0; color:var(--muted); max-width:62ch; font-size:15.2px}
+
+/* ---------- option grid ---------- */
+.options{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:26px; align-items:start; margin:0 0 22px;
+}
+@media (max-width:960px){
+  .options{grid-template-columns:1fr; gap:44px}
+  .opt-head{min-height:0}
+}
+
+.opt{display:flex; flex-direction:column; gap:16px}
+.opt-head{display:flex; flex-direction:column; gap:9px; min-height:122px}
+.opt-tag{display:flex; align-items:baseline; gap:11px}
+.opt-letter{
+  font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; letter-spacing:.1em;
+  color:var(--surface); background:var(--slate); padding:3px 9px; border-radius:2px;
+}
+.opt.pick .opt-letter{background:var(--accent); color:#FFF}
+:root[data-theme="dark"] .opt.pick .opt-letter,
+:root:not([data-theme="light"]) .opt.pick .opt-letter{color:#1A1206}
+.pick-flag{
+  font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--accent);
+}
+.opt h3{
+  font-family:Newsreader,Georgia,serif; font-weight:500; font-size:1.42rem; line-height:1.22;
+  margin:0; color:var(--ink); letter-spacing:-.008em;
+}
+.opt-sub{margin:0; font-size:14.4px; color:var(--muted); line-height:1.55}
+
+/* ---------- phone ---------- */
+.phone{
+  background:var(--phone-shell); border-radius:26px; padding:9px;
+  box-shadow:0 1px 2px rgba(0,0,0,.16), 0 10px 26px -14px rgba(0,0,0,.34);
+}
+.screen{
+  background:var(--phone-screen); border-radius:19px; overflow:hidden;
+  display:flex; flex-direction:column; height:472px;
+}
+.bar{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:9px 16px 5px; font-family:"IBM Plex Mono",monospace; font-size:10.5px;
+  color:var(--muted); font-weight:500;
+}
+.chat-head{
+  display:flex; align-items:center; gap:10px; padding:7px 14px 11px;
+  border-bottom:1px solid var(--rule);
+}
+.avatar{
+  width:27px; height:27px; border-radius:50%; background:var(--accent-soft);
+  color:var(--accent); display:grid; place-items:center; flex:none;
+  font-family:Newsreader,Georgia,serif; font-size:14px; font-weight:600;
+}
+.chat-name{font-size:13.2px; font-weight:600; color:var(--ink); line-height:1.25}
+.chat-meta{font-size:10.5px; color:var(--muted); font-family:"IBM Plex Mono",monospace}
+
+.thread{
+  flex:1; overflow-y:auto; padding:16px 13px 18px;
+  display:flex; flex-direction:column; gap:9px;
+}
+.thread::-webkit-scrollbar{width:5px}
+.thread::-webkit-scrollbar-thumb{background:var(--rule-2); border-radius:3px}
+
+.msg{max-width:88%; display:flex; flex-direction:column; gap:4px}
+.msg.out{align-self:flex-end; align-items:flex-end}
+.chip{
+  font-family:"IBM Plex Mono",monospace; font-size:9px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted); padding-left:2px;
+}
+.chip .n{color:var(--ink-2)}
+.bubble{
+  background:var(--bubble-in); color:var(--bubble-in-ink);
+  border-radius:13px 13px 13px 3px; padding:10px 13px; font-size:12.6px; line-height:1.56;
+  white-space:pre-wrap; box-shadow:0 1px 1px rgba(0,0,0,.07);
+}
+.msg.out .bubble{
+  background:var(--bubble-out); color:var(--bubble-out-ink);
+  border-radius:13px 13px 3px 13px;
+}
+.bubble .verse{font-family:Newsreader,Georgia,serif; font-style:italic; font-size:13.4px; display:block; margin:7px 0}
+.bubble .cut{color:var(--muted); font-style:italic; font-size:11.4px}
+.audio{
+  display:flex; align-items:center; gap:9px; background:var(--bubble-in);
+  border-radius:13px 13px 13px 3px; padding:10px 13px; box-shadow:0 1px 1px rgba(0,0,0,.07);
+}
+.play{width:22px; height:22px; border-radius:50%; background:var(--accent); flex:none; display:grid; place-items:center}
+.play svg{display:block}
+.wave{flex:1; height:15px; display:flex; align-items:center; gap:2px}
+.wave i{flex:1; background:var(--rule-2); border-radius:1px; display:block}
+.audio-time{font-family:"IBM Plex Mono",monospace; font-size:10px; color:var(--muted)}
+
+.divider{
+  display:flex; align-items:center; gap:9px; margin:5px 0 1px;
+}
+.divider::before,.divider::after{content:""; height:1px; background:var(--rule-2); flex:1}
+.divider span{
+  font-family:"IBM Plex Mono",monospace; font-size:8.8px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted); white-space:nowrap;
+}
+
+/* ---------- spec strip ---------- */
+.spec{border-top:1px solid var(--rule); display:flex; flex-direction:column}
+.spec-row{
+  display:flex; justify-content:space-between; align-items:baseline; gap:14px;
+  padding:8px 0; border-bottom:1px solid var(--rule);
+}
+.spec-k{font-size:12.8px; color:var(--muted)}
+.spec-v{
+  font-family:"IBM Plex Mono",monospace; font-size:12.4px; font-weight:500;
+  color:var(--ink); text-align:right; font-variant-numeric:tabular-nums;
+}
+.spec-v.good{color:var(--good)} .spec-v.warn{color:var(--warn)} .spec-v.bad{color:var(--bad)}
+
+/* ---------- table ---------- */
+.table-scroll{overflow-x:auto; border:1px solid var(--rule); background:var(--surface); margin:0 0 16px}
+table{border-collapse:collapse; width:100%; min-width:660px; font-size:14px}
+th,td{padding:13px 16px; text-align:left; border-bottom:1px solid var(--rule); vertical-align:top}
+thead th{
+  font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted); background:var(--surface-2); white-space:nowrap;
+}
+tbody th{font-weight:500; color:var(--ink); font-size:14px; white-space:nowrap}
+tbody tr:last-child td, tbody tr:last-child th{border-bottom:none}
+td{color:var(--ink-2); font-variant-numeric:tabular-nums}
+tr.dim th, tr.dim td{color:var(--muted)}
+tr.pick{background:var(--accent-soft)}
+tr.pick th{color:var(--ink)}
+.foot{font-size:12.8px; color:var(--muted); margin:0 0 60px; max-width:70ch}
+
+/* ---------- recommendation ---------- */
+.verdict{
+  background:var(--surface); border:1px solid var(--rule); border-top:2px solid var(--accent);
+  padding:34px 36px; margin:0 0 44px;
+}
+.verdict h2{margin-bottom:16px}
+.verdict p{margin:0 0 14px; color:var(--ink-2); max-width:64ch; font-size:15.4px}
+.verdict p:last-child{margin-bottom:0}
+.verdict strong{color:var(--ink); font-weight:600}
+
+.ask{border-top:1px solid var(--rule); padding-top:34px}
+.ask h2{margin-bottom:14px}
+.ask p{color:var(--ink-2); max-width:64ch; margin:0 0 22px; font-size:15.4px}
+.letters{display:flex; gap:10px; flex-wrap:wrap}
+.letter{
+  font-family:"IBM Plex Mono",monospace; font-size:13px; font-weight:600;
+  border:1px solid var(--rule-2); background:var(--surface); color:var(--ink-2);
+  padding:9px 16px; border-radius:2px; min-width:74px; text-align:center;
+}
+.letter.pick{border-color:var(--accent); color:var(--accent); background:var(--accent-soft)}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">Vine and Branches · Delivery mockup · Milestone 1</p>
+    <h1>How the daily lesson arrives</h1>
+    <p class="standfirst">A full lesson runs about 5,000 characters. The messaging platform will not carry that in one piece, so the lesson has to arrive as a sequence. Here is how each version actually reads at 6am on a member's phone, and what each one costs you to run.</p>
+  </header>
+
+  <section class="note">
+    <p class="note-label">The rule<br>behind this</p>
+    <div>
+      <p>The platform draws a hard line between a message <strong>you start</strong> and a message <strong>you send back</strong>. When a member writes to you, a <strong>24 hour reply window</strong> opens, and inside it you can send anything — written fresh for that person, up to 4,096 characters a message, at no per-message cost.</p>
+      <p>Outside that window, every message you start has to use a body the provider <strong>approved in advance</strong>, capped at 1,024 characters, billed per send. Approved bodies still take variables, so the member's name, their verse and yesterday's journal line all drop in per person. What they cannot do is let the system write the whole thing freely.</p>
+      <p>The 6am lesson is a message we start, a day after the member last wrote. So the only real question is <strong>how much of the lesson rides in the approved opener, and how much waits for a reply.</strong> That is what the three options below trade against each other.</p>
+    </div>
+  </section>
+
+  <div class="sec-head">
+    <h2>Three ways it can read</h2>
+    <p>Same lesson, same member, same morning. Scroll each phone.</p>
+  </div>
+
+  <div class="options">
+
+    <!-- ============ A ============ -->
+    <article class="opt">
+      <div class="opt-head">
+        <div class="opt-tag"><span class="opt-letter">A</span></div>
+        <h3>The whole lesson, approved</h3>
+        <p class="opt-sub">Every piece is a pre-approved message. Nothing waits on the member.</p>
+      </div>
+
+      <div class="phone">
+        <div class="screen">
+          <div class="bar"><span>6:00</span><span>▂▄▆ ⌁</span></div>
+          <div class="chat-head">
+            <div class="avatar">V</div>
+            <div>
+              <div class="chat-name">Vine and Branches</div>
+              <div class="chat-meta">Grace Fellowship</div>
+            </div>
+          </div>
+          <div class="thread">
+            <div class="msg">
+              <span class="chip">Approved · <span class="n">524 / 1024</span></span>
+              <div class="bubble">Good morning, Marcus. Day 12 of your walk through John.<span class="verse">"I am the vine; you are the branches. Whoever abides in me and I in him, he it is that bears much fruit, for apart from me you can do nothing." — John 15:5</span>Yesterday you wrote that you have been carrying your brother's situation on your own strength. Hold that next to this verse. Jesus does not say the branch works harder. He says the branch stays put.
+
+Abiding is not a feeling you manufacture on a good morning. It is a place you return to on a bad one. (1 of 5)</div>
+            </div>
+            <div class="msg">
+              <span class="chip">Approved · <span class="n">981 / 1024</span></span>
+              <div class="bubble">A branch does not strain toward the vine. It is already joined to it. The whole of its life is a matter of staying where it has been put, and letting something else do the carrying.<span class="cut">…continues for another 780 characters… (2 of 5)</span></div>
+            </div>
+            <div class="msg">
+              <span class="chip">Approved · <span class="n">874 / 1024</span></span>
+              <div class="bubble"><span class="cut">Teaching, third section — 874 characters. (3 of 5)</span></div>
+            </div>
+            <div class="msg">
+              <span class="chip">Approved · <span class="n">1012 / 1024</span></span>
+              <div class="bubble"><span class="cut">Reflection and today's question — 1,012 characters. (4 of 5)</span></div>
+            </div>
+            <div class="msg">
+              <span class="chip">Approved · <span class="n">602 / 1024</span></span>
+              <div class="bubble">Where are you working instead of abiding this week? Write back whenever you are ready, and I will keep it with your journal. (5 of 5)</div>
+            </div>
+            <div class="msg">
+              <span class="chip">Approved</span>
+              <div class="audio">
+                <span class="play"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M7.5 4.5L0.5 8.4V0.6L7.5 4.5Z" fill="#fff"/></svg></span>
+                <span class="wave"><i style="height:30%"></i><i style="height:58%"></i><i style="height:88%"></i><i style="height:44%"></i><i style="height:70%"></i><i style="height:36%"></i><i style="height:80%"></i><i style="height:52%"></i><i style="height:64%"></i><i style="height:28%"></i><i style="height:74%"></i><i style="height:40%"></i><i style="height:56%"></i><i style="height:84%"></i><i style="height:34%"></i><i style="height:62%"></i></span>
+                <span class="audio-time">4:12</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec">
+        <div class="spec-row"><span class="spec-k">Messages at 6am</span><span class="spec-v warn">6</span></div>
+        <div class="spec-row"><span class="spec-k">Arrives without a reply</span><span class="spec-v good">Yes</span></div>
+        <div class="spec-row"><span class="spec-k">Bodies needing approval</span><span class="spec-v bad">~14</span></div>
+        <div class="spec-row"><span class="spec-k">Reword a lesson later</span><span class="spec-v bad">Re-approval</span></div>
+        <div class="spec-row"><span class="spec-k">Channel cost / member / mo</span><span class="spec-v bad">$1.80 – 2.70</span></div>
+      </div>
+    </article>
+
+    <!-- ============ B ============ -->
+    <article class="opt">
+      <div class="opt-head">
+        <div class="opt-tag"><span class="opt-letter">B</span></div>
+        <h3>A knock, then the lesson</h3>
+        <p class="opt-sub">One short approved line. The member replies, and the real lesson follows.</p>
+      </div>
+
+      <div class="phone">
+        <div class="screen">
+          <div class="bar"><span>6:00</span><span>▂▄▆ ⌁</span></div>
+          <div class="chat-head">
+            <div class="avatar">V</div>
+            <div>
+              <div class="chat-name">Vine and Branches</div>
+              <div class="chat-meta">Grace Fellowship</div>
+            </div>
+          </div>
+          <div class="thread">
+            <div class="msg">
+              <span class="chip">Approved · <span class="n">183 / 1024</span></span>
+              <div class="bubble">Good morning, Marcus. Day 12 of your walk through John is ready, and today's reading sits directly on top of what you wrote last night. Reply with anything and I will send it through.</div>
+            </div>
+            <div class="msg out">
+              <span class="chip">Marcus · 6:41</span>
+              <div class="bubble">ready</div>
+            </div>
+            <div class="divider"><span>reply window open · 24h</span></div>
+            <div class="msg">
+              <span class="chip">Written fresh · <span class="n">2,940 / 4,096</span></span>
+              <div class="bubble"><span class="verse">"I am the vine; you are the branches. Whoever abides in me and I in him, he it is that bears much fruit, for apart from me you can do nothing." — John 15:5</span>Yesterday you wrote that you have been carrying your brother's situation on your own strength. Hold that next to this verse. Jesus does not say the branch works harder. He says the branch stays put.
+
+Abiding is not a feeling you manufacture on a good morning. It is a place you return to on a bad one. A branch does not strain toward the vine, it is already joined to it.<span class="cut">…continues for another 2,400 characters…</span></div>
+            </div>
+            <div class="msg">
+              <span class="chip">Written fresh · <span class="n">1,160 / 4,096</span></span>
+              <div class="bubble">Where are you working instead of abiding this week? Write back whenever you are ready, and I will keep it with your journal.</div>
+            </div>
+            <div class="msg">
+              <span class="chip">Written fresh</span>
+              <div class="audio">
+                <span class="play"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M7.5 4.5L0.5 8.4V0.6L7.5 4.5Z" fill="#fff"/></svg></span>
+                <span class="wave"><i style="height:34%"></i><i style="height:66%"></i><i style="height:82%"></i><i style="height:40%"></i><i style="height:74%"></i><i style="height:30%"></i><i style="height:86%"></i><i style="height:48%"></i><i style="height:60%"></i><i style="height:32%"></i><i style="height:78%"></i><i style="height:44%"></i><i style="height:52%"></i><i style="height:88%"></i><i style="height:38%"></i><i style="height:58%"></i></span>
+                <span class="audio-time">4:12</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec">
+        <div class="spec-row"><span class="spec-k">Messages at 6am</span><span class="spec-v good">1</span></div>
+        <div class="spec-row"><span class="spec-k">Arrives without a reply</span><span class="spec-v bad">No</span></div>
+        <div class="spec-row"><span class="spec-k">Bodies needing approval</span><span class="spec-v good">~3</span></div>
+        <div class="spec-row"><span class="spec-k">Reword a lesson later</span><span class="spec-v good">Anytime</span></div>
+        <div class="spec-row"><span class="spec-k">Channel cost / member / mo</span><span class="spec-v good">$0.30 – 0.45</span></div>
+      </div>
+    </article>
+
+    <!-- ============ C ============ -->
+    <article class="opt pick">
+      <div class="opt-head">
+        <div class="opt-tag"><span class="opt-letter">C</span><span class="pick-flag">Recommended</span></div>
+        <h3>Enough to stand alone</h3>
+        <p class="opt-sub">The approved opener carries a real reading. Replying unlocks the rest.</p>
+      </div>
+
+      <div class="phone">
+        <div class="screen">
+          <div class="bar"><span>6:00</span><span>▂▄▆ ⌁</span></div>
+          <div class="chat-head">
+            <div class="avatar">V</div>
+            <div>
+              <div class="chat-name">Vine and Branches</div>
+              <div class="chat-meta">Grace Fellowship</div>
+            </div>
+          </div>
+          <div class="thread">
+            <div class="msg">
+              <span class="chip">Approved · <span class="n">600 / 1024</span></span>
+              <div class="bubble">Good morning, Marcus. Day 12 of your walk through John.<span class="verse">"I am the vine; you are the branches. Whoever abides in me and I in him, he it is that bears much fruit, for apart from me you can do nothing." — John 15:5</span>Yesterday you wrote that you have been carrying your brother's situation on your own strength. Hold that next to this verse. Jesus does not say the branch works harder. He says the branch stays put. Abiding is not a feeling you manufacture on a good morning, it is a place you return to on a bad one.
+
+Reply with anything and I will send you the rest, today's reflection, and the audio.</div>
+            </div>
+            <div class="msg out">
+              <span class="chip">Marcus · 6:38</span>
+              <div class="bubble">yes please</div>
+            </div>
+            <div class="divider"><span>reply window open · 24h</span></div>
+            <div class="msg">
+              <span class="chip">Written fresh · <span class="n">2,610 / 4,096</span></span>
+              <div class="bubble">A branch does not strain toward the vine. It is already joined to it. The whole of its life is a matter of staying where it has been put, and letting something else do the carrying.<span class="cut">…continues for another 2,430 characters, then today's reflection…</span></div>
+            </div>
+            <div class="msg">
+              <span class="chip">Written fresh</span>
+              <div class="audio">
+                <span class="play"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M7.5 4.5L0.5 8.4V0.6L7.5 4.5Z" fill="#fff"/></svg></span>
+                <span class="wave"><i style="height:32%"></i><i style="height:60%"></i><i style="height:86%"></i><i style="height:42%"></i><i style="height:72%"></i><i style="height:34%"></i><i style="height:82%"></i><i style="height:50%"></i><i style="height:66%"></i><i style="height:30%"></i><i style="height:76%"></i><i style="height:38%"></i><i style="height:54%"></i><i style="height:86%"></i><i style="height:36%"></i><i style="height:64%"></i></span>
+                <span class="audio-time">4:12</span>
+              </div>
+            </div>
+            <div class="msg out">
+              <span class="chip">Marcus · 7:02</span>
+              <div class="bubble">The brother thing. I keep trying to fix it before I pray about it.</div>
+            </div>
+            <div class="msg">
+              <span class="chip">Written fresh</span>
+              <div class="bubble">That is worth keeping. I have saved it to your journal, and it is the thread we will pick up tomorrow.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec">
+        <div class="spec-row"><span class="spec-k">Messages at 6am</span><span class="spec-v good">1</span></div>
+        <div class="spec-row"><span class="spec-k">Arrives without a reply</span><span class="spec-v good">Yes, in part</span></div>
+        <div class="spec-row"><span class="spec-k">Bodies needing approval</span><span class="spec-v good">~4</span></div>
+        <div class="spec-row"><span class="spec-k">Reword a lesson later</span><span class="spec-v warn">Body fixed, rest free</span></div>
+        <div class="spec-row"><span class="spec-k">Channel cost / member / mo</span><span class="spec-v good">$0.30 – 0.45</span></div>
+      </div>
+    </article>
+
+  </div>
+
+  <p class="foot">Costs are order of magnitude at current US rates for this message class, and get pinned exactly in Milestone 1 once the real lesson length is known. Approved-body counts assume one opener per lesson type plus the onboarding and consent messages.</p>
+
+  <div class="sec-head">
+    <h2>Against the alternative</h2>
+    <p>The proposal promised you a look at plain SMS as well, since it has no approval step at all.</p>
+  </div>
+
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th><th>At 6am</th><th>Needs a reply</th><th>Approval step</th><th>Per member / mo</th><th>Real cost to you</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>A · All approved</th>
+          <td>6 messages</td><td>No</td><td>~14 bodies</td><td>$1.80 – 2.70</td>
+          <td>Lessons get locked into a fixed skeleton. Every wording change waits on review.</td>
+        </tr>
+        <tr>
+          <th>B · Knock first</th>
+          <td>1 message</td><td>Yes, always</td><td>~3 bodies</td><td>$0.30 – 0.45</td>
+          <td>A member who does not reply gets nothing that day. On a devotional, that is most people some mornings.</td>
+        </tr>
+        <tr class="pick">
+          <th>C · Standalone opener</th>
+          <td>1 message</td><td>Only for the rest</td><td>~4 bodies</td><td>$0.30 – 0.45</td>
+          <td>The opener's shape is fixed. The verse, the teaching and the journal callback still change daily.</td>
+        </tr>
+        <tr class="dim">
+          <th>SMS via Twilio</th>
+          <td>1 long text</td><td>No</td><td>None</td><td>$7.00 – 8.00</td>
+          <td>No approvals, but roughly 33 billed segments a lesson, no audio, no read state, and no journal thread.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="foot">SMS also loses the thing the whole platform is built on: a single running conversation the member can scroll back through, and that the journal, matching and crisis checks all read from.</p>
+
+  <section class="verdict">
+    <h2>What I would build</h2>
+    <p><strong>Option C.</strong> It is the only one where a member who never replies still gets scripture and a real thought at 6am, and a member who does reply gets a conversation rather than a broadcast.</p>
+    <p>It also does something the other two do not. The reply is the engagement signal the rest of the platform needs — <strong>Workflow 7's weekly progression, the mentor matching, and the Tier 2 introduction timed off real engagement rather than a day count</strong> all need to know who is actually showing up. Option A gets you delivery with no signal. Option C gets you both from the same message.</p>
+    <p>Option B is the cheapest and the most flexible, and if the opener were anything other than a morning devotional I would probably pick it. But a knock that carries nothing is easy to leave unopened, and the day it goes unopened is the day the member got nothing at all.</p>
+  </section>
+
+  <section class="ask">
+    <h2>What I need back</h2>
+    <p>One letter. I will draft the approved bodies against whichever you pick and submit them on day one, so the review clock is running while the rest of Milestone 1 gets built.</p>
+    <div class="letters">
+      <span class="letter">A</span>
+      <span class="letter">B</span>
+      <span class="letter pick">C · recommended</span>
+    </div>
+  </section>
+
+</div>
+</body></html>
