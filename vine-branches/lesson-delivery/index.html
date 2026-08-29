@@ -156,6 +156,31 @@ h2{
 }
 .opt-sub{margin:0; font-size:14.4px; color:var(--muted); line-height:1.55}
 
+/* ---------- verified name ---------- */
+.names{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:26px 0 0}
+.name-card{background:var(--surface); border:1px solid var(--rule); padding:20px 22px 22px}
+.name-card.no{border-left:2px solid var(--bad)}
+.name-card.yes{border-left:2px solid var(--good)}
+.name-tag{
+  font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; margin:0 0 14px;
+}
+.name-card.no .name-tag{color:var(--bad)}
+.name-card.yes .name-tag{color:var(--good)}
+.name-demo{
+  background:var(--phone-screen); border:1px solid var(--rule); border-radius:12px;
+  padding:10px 13px 11px; margin:0 0 15px;
+}
+.name-demo .chat-head{border-bottom:none; padding:0}
+.name-card p{margin:0 0 9px; font-size:14.3px; color:var(--ink-2)}
+.name-card p:last-child{margin:0}
+.sec-names{border-top:1px solid var(--rule); padding-top:34px; margin:0 0 56px}
+.sec-names h2{margin-bottom:14px}
+.sec-names .lede{color:var(--ink-2); max-width:64ch; margin:0; font-size:15.4px}
+.sec-names .names-note{color:var(--ink-2); max-width:64ch; margin:24px 0 0; font-size:15.4px}
+.name-card strong{color:var(--ink); font-weight:600}
+@media (max-width:700px){ .names{grid-template-columns:1fr} }
+
 /* ---------- phone ---------- */
 .phone{
   background:var(--phone-shell); border-radius:26px; padding:9px;
@@ -358,7 +383,7 @@ tr.pick th{color:var(--ink)}
             <div class="avatar">V</div>
             <div>
               <div class="chat-name">Vine and Branches</div>
-              <div class="chat-meta">Grace Fellowship</div>
+              <div class="chat-meta">Business account</div>
             </div>
           </div>
           <div class="thread">
@@ -420,7 +445,7 @@ Abiding is not a feeling you manufacture on a good morning. It is a place you re
             <div class="avatar">V</div>
             <div>
               <div class="chat-name">Vine and Branches</div>
-              <div class="chat-meta">Grace Fellowship</div>
+              <div class="chat-meta">Business account</div>
             </div>
           </div>
           <div class="thread">
@@ -479,7 +504,7 @@ Abiding is not a feeling you manufacture on a good morning. It is a place you re
             <div class="avatar">V</div>
             <div>
               <div class="chat-name">Vine and Branches</div>
-              <div class="chat-meta">Grace Fellowship</div>
+              <div class="chat-meta">Business account</div>
             </div>
           </div>
           <div class="thread">
@@ -578,6 +603,45 @@ Reply with anything and I will send you the rest, today's reflection, and the au
     <p><strong>Option C.</strong> It is the only one where a member who never replies still gets scripture and a real thought at 6am, and a member who does reply gets a conversation rather than a broadcast.</p>
     <p>It also does something the other two do not. The reply is the engagement signal the rest of the platform needs — <strong>Workflow 7's weekly progression, the mentor matching, and the Tier 2 introduction timed off real engagement rather than a day count</strong> all need to know who is actually showing up. Option A gets you delivery with no signal. Option C gets you both from the same message.</p>
     <p>Option B is the cheapest and the most flexible, and if the opener were anything other than a morning devotional I would probably pick it. But a knock that carries nothing is easy to leave unopened, and the day it goes unopened is the day the member got nothing at all.</p>
+  </section>
+
+  <section class="sec-names">
+    <h2>One thing that shows up in every message</h2>
+    <p class="lede">The name on the top line of every one of these threads is the name Meta verifies you under. It comes from the legal entity behind the account, and it is on screen every single morning.</p>
+
+    <div class="names">
+      <div class="name-card no">
+        <p class="name-tag">If you verify as yourself</p>
+        <div class="name-demo">
+          <div class="chat-head">
+            <div class="avatar">A</div>
+            <div>
+              <div class="chat-name">Adam Velez</div>
+              <div class="chat-meta">Business account</div>
+            </div>
+          </div>
+        </div>
+        <p>Without a company, the tax record Meta checks is issued in your personal name, so that is what verifies and that is what members read at 6am.</p>
+        <p>It also cannot travel. A second church cannot be sold a daily study that arrives from a stranger's personal name.</p>
+      </div>
+
+      <div class="name-card yes">
+        <p class="name-tag">If you verify as the company</p>
+        <div class="name-demo">
+          <div class="chat-head">
+            <div class="avatar">V</div>
+            <div>
+              <div class="chat-name">Vine and Branches</div>
+              <div class="chat-meta">Business account</div>
+            </div>
+          </div>
+        </div>
+        <p>The company name verifies, so the same name works for every church you sell to and none of them see another church's branding.</p>
+        <p><strong>Whatever you name the company is what appears here.</strong> Get it right at filing, because changing it afterward means going back through verification.</p>
+      </div>
+    </div>
+
+    <p class="names-note">This is the whole reason I would rather you set up your own entity than run it under a church's. Members never see a member ID or a workflow. They see this line, every day.</p>
   </section>
 
   <section class="ask">
