@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Two ways a guardian can consent for a minor, side by side, and the one that keeps the crisis alert working.">
+<title>Parental Consent</title>
+<style>*{margin:0;padding:0}img{max-width:100%}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap">
+
+<style>
+:root{
+  --ground:#F1F3F4; --surface:#FBFCFC; --surface-2:#E9ECEE;
+  --ink:#151A20; --ink-2:#3C4854; --muted:#6B7580;
+  --rule:#D6DBDE; --rule-2:#C2CACF;
+  --accent:#9C6B31; --accent-soft:#F0E4D3;
+  --slate:#232B3A;
+  --bubble-in:#FFFFFF; --bubble-in-ink:#1A1F26;
+  --bubble-out:#DDE6E2; --bubble-out-ink:#1A2420;
+  --phone-screen:#E4E8E9; --phone-shell:#2A323B;
+  --good:#2F6B52; --warn:#8A6A22; --bad:#8C3B34;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#13171B; --surface:#1B2128; --surface-2:#232A32;
+    --ink:#E7EAEC; --ink-2:#BAC3CB; --muted:#8D98A3;
+    --rule:#2B333B; --rule-2:#3A444E;
+    --accent:#D6A263; --accent-soft:#33291C;
+    --slate:#C3CCD6;
+    --bubble-in:#242C34; --bubble-in-ink:#E4E8EB;
+    --bubble-out:#2C3A38; --bubble-out-ink:#DCE6E2;
+    --phone-screen:#171D22; --phone-shell:#0C1013;
+    --good:#6FB795; --warn:#D2AC57; --bad:#D98079;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#13171B; --surface:#1B2128; --surface-2:#232A32;
+  --ink:#E7EAEC; --ink-2:#BAC3CB; --muted:#8D98A3;
+  --rule:#2B333B; --rule-2:#3A444E;
+  --accent:#D6A263; --accent-soft:#33291C;
+  --slate:#C3CCD6;
+  --bubble-in:#242C34; --bubble-in-ink:#E4E8EB;
+  --bubble-out:#2C3A38; --bubble-out-ink:#DCE6E2;
+  --phone-screen:#171D22; --phone-shell:#0C1013;
+  --good:#6FB795; --warn:#D2AC57; --bad:#D98079;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px; margin:0 auto; padding:56px 28px 96px}
+
+/* ---------- masthead ---------- */
+.eyebrow{
+  font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:11.5px; font-weight:500;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin:0 0 20px;
+}
+h1{
+  font-family:Newsreader,Georgia,serif; font-weight:500; font-size:clamp(2.4rem,5.4vw,3.6rem);
+  line-height:1.06; letter-spacing:-.015em; margin:0 0 20px; text-wrap:balance; color:var(--ink);
+}
+.standfirst{
+  font-family:Newsreader,Georgia,serif; font-size:clamp(1.1rem,2vw,1.32rem); line-height:1.62;
+  color:var(--ink-2); max-width:60ch; margin:0;
+}
+.masthead{border-bottom:1px solid var(--rule); padding-bottom:44px; margin-bottom:44px}
+
+/* ---------- constraint note ---------- */
+.note{
+  display:grid; grid-template-columns:auto 1fr; gap:0 26px;
+  background:var(--surface); border:1px solid var(--rule);
+  border-left:2px solid var(--accent); padding:26px 28px; margin:0 0 60px;
+}
+.note-label{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:600; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--accent); white-space:nowrap; padding-top:4px;
+}
+.note p{margin:0 0 12px; max-width:64ch; color:var(--ink-2); font-size:15.2px}
+.note p:last-child{margin-bottom:0}
+.note strong{color:var(--ink); font-weight:600}
+.tmpl{
+  font-family:"IBM Plex Mono",monospace; font-size:12.6px; background:var(--surface-2);
+  border:1px solid var(--rule); padding:2px 7px; border-radius:2px; color:var(--ink);
+  display:inline-block; margin:2px 0;
+}
+.split{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0 10px; max-width:64ch}
+.side{border:1px solid var(--rule); background:var(--ground); padding:15px 17px 16px}
+.side.paid{border-left:2px solid var(--accent)}
+.side.free{border-left:2px solid var(--good)}
+.side h4{
+  font-family:"IBM Plex Mono",monospace; font-size:10px; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--muted); margin:0 0 3px;
+}
+.side .what{
+  font-family:Newsreader,Georgia,serif; font-size:1.16rem; line-height:1.2; margin:0 0 13px;
+  color:var(--ink); font-weight:500;
+}
+.side dl{margin:0; display:flex; flex-direction:column; gap:8px}
+.side dl div{display:flex; flex-direction:column; gap:1px}
+.side dt{
+  font-family:"IBM Plex Mono",monospace; font-size:9.5px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted);
+}
+.side dd{margin:0; font-size:13.8px; line-height:1.4; color:var(--ink-2)}
+.side dd.cost-paid{color:var(--accent); font-weight:600}
+.side dd.cost-free{color:var(--good); font-weight:600}
+.split-note{font-size:13.4px; color:var(--muted); margin:0 0 18px !important; max-width:64ch}
+@media (max-width:640px){
+  .note{grid-template-columns:1fr; gap:14px}
+  .split{grid-template-columns:1fr}
+}
+
+/* ---------- section heads ---------- */
+.sec-head{margin:0 0 32px}
+h2{
+  font-family:Newsreader,Georgia,serif; font-weight:500; font-size:clamp(1.6rem,3vw,2.1rem);
+  line-height:1.18; letter-spacing:-.01em; margin:0 0 10px; color:var(--ink); text-wrap:balance;
+}
+.sec-head p{margin:0; color:var(--muted); max-width:66ch; font-size:15.2px}
+.sec-head p strong{color:var(--ink-2); font-weight:600}
+
+/* ---------- option grid ---------- */
+.options{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:26px; align-items:start; margin:0 0 22px;
+}
+@media (max-width:960px){
+  .options{grid-template-columns:1fr; gap:44px}
+  .opt-head{min-height:0}
+}
+
+.opt{display:flex; flex-direction:column; gap:16px}
+.opt-head{display:flex; flex-direction:column; gap:9px; min-height:122px}
+.opt-tag{display:flex; align-items:baseline; gap:11px}
+.opt-letter{
+  font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; letter-spacing:.1em;
+  color:var(--surface); background:var(--slate); padding:3px 9px; border-radius:2px;
+}
+.opt.pick .opt-letter{background:var(--accent); color:#FFF}
+:root[data-theme="dark"] .opt.pick .opt-letter,
+:root:not([data-theme="light"]) .opt.pick .opt-letter{color:#1A1206}
+.pick-flag{
+  font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--accent);
+}
+.opt h3{
+  font-family:Newsreader,Georgia,serif; font-weight:500; font-size:1.42rem; line-height:1.22;
+  margin:0; color:var(--ink); letter-spacing:-.008em;
+}
+.opt-sub{margin:0; font-size:14.4px; color:var(--muted); line-height:1.55}
+
+/* ---------- verified name ---------- */
+.names{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:26px 0 0}
+.name-card{background:var(--surface); border:1px solid var(--rule); padding:20px 22px 22px}
+.name-card.no{border-left:2px solid var(--bad)}
+.name-card.yes{border-left:2px solid var(--good)}
+.name-tag{
+  font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; margin:0 0 14px;
+}
+.name-card.no .name-tag{color:var(--bad)}
+.name-card.yes .name-tag{color:var(--good)}
+.name-demo{
+  background:var(--phone-screen); border:1px solid var(--rule); border-radius:12px;
+  padding:10px 13px 11px; margin:0 0 15px;
+}
+.name-demo .chat-head{border-bottom:none; padding:0}
+.name-card p{margin:0 0 9px; font-size:14.3px; color:var(--ink-2)}
+.name-card p:last-child{margin:0}
+.sec-names{border-top:1px solid var(--rule); padding-top:34px; margin:0 0 56px}
+.sec-names h2{margin-bottom:14px}
+.sec-names .lede{color:var(--ink-2); max-width:64ch; margin:0; font-size:15.4px}
+.sec-names .names-note{color:var(--ink-2); max-width:64ch; margin:24px 0 0; font-size:15.4px}
+.name-card strong{color:var(--ink); font-weight:600}
+@media (max-width:700px){ .names{grid-template-columns:1fr} }
+
+/* ---------- phone ---------- */
+.phone{
+  background:var(--phone-shell); border-radius:26px; padding:9px;
+  box-shadow:0 1px 2px rgba(0,0,0,.16), 0 10px 26px -14px rgba(0,0,0,.34);
+}
+.screen{
+  background:var(--phone-screen); border-radius:19px; overflow:hidden;
+  display:flex; flex-direction:column; height:472px;
+}
+.bar{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:9px 16px 5px; font-family:"IBM Plex Mono",monospace; font-size:10.5px;
+  color:var(--muted); font-weight:500;
+}
+.chat-head{
+  display:flex; align-items:center; gap:10px; padding:7px 14px 11px;
+  border-bottom:1px solid var(--rule);
+}
+.avatar{
+  width:27px; height:27px; border-radius:50%; background:var(--accent-soft);
+  color:var(--accent); display:grid; place-items:center; flex:none;
+  font-family:Newsreader,Georgia,serif; font-size:14px; font-weight:600;
+}
+.chat-name{font-size:13.2px; font-weight:600; color:var(--ink); line-height:1.25}
+.chat-meta{font-size:10.5px; color:var(--muted); font-family:"IBM Plex Mono",monospace}
+
+.thread{
+  flex:1; overflow-y:auto; padding:16px 13px 18px;
+  display:flex; flex-direction:column; gap:9px;
+}
+.thread::-webkit-scrollbar{width:5px}
+.thread::-webkit-scrollbar-thumb{background:var(--rule-2); border-radius:3px}
+
+.msg{max-width:88%; display:flex; flex-direction:column; gap:4px}
+.msg.out{align-self:flex-end; align-items:flex-end}
+.chip{
+  font-family:"IBM Plex Mono",monospace; font-size:9px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted); padding-left:2px;
+}
+.chip .n{color:var(--ink-2)}
+.bubble{
+  background:var(--bubble-in); color:var(--bubble-in-ink);
+  border-radius:13px 13px 13px 3px; padding:10px 13px; font-size:12.6px; line-height:1.56;
+  white-space:pre-wrap; box-shadow:0 1px 1px rgba(0,0,0,.07);
+}
+.msg.out .bubble{
+  background:var(--bubble-out); color:var(--bubble-out-ink);
+  border-radius:13px 13px 3px 13px;
+}
+.bubble .verse{font-family:Newsreader,Georgia,serif; font-style:italic; font-size:13.4px; display:block; margin:7px 0}
+.bubble .cut{color:var(--muted); font-style:italic; font-size:11.4px}
+.audio{
+  display:flex; align-items:center; gap:9px; background:var(--bubble-in);
+  border-radius:13px 13px 13px 3px; padding:10px 13px; box-shadow:0 1px 1px rgba(0,0,0,.07);
+}
+.play{width:22px; height:22px; border-radius:50%; background:var(--accent); flex:none; display:grid; place-items:center}
+.play svg{display:block}
+.wave{flex:1; height:15px; display:flex; align-items:center; gap:2px}
+.wave i{flex:1; background:var(--rule-2); border-radius:1px; display:block}
+.audio-time{font-family:"IBM Plex Mono",monospace; font-size:10px; color:var(--muted)}
+
+.divider{
+  display:flex; align-items:center; gap:9px; margin:5px 0 1px;
+}
+.divider::before,.divider::after{content:""; height:1px; background:var(--rule-2); flex:1}
+.divider span{
+  font-family:"IBM Plex Mono",monospace; font-size:8.8px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted); white-space:nowrap;
+}
+
+/* ---------- spec strip ---------- */
+.spec{border-top:1px solid var(--rule); display:flex; flex-direction:column}
+.spec-row{
+  display:flex; justify-content:space-between; align-items:baseline; gap:14px;
+  padding:8px 0; border-bottom:1px solid var(--rule);
+}
+.spec-k{font-size:12.8px; color:var(--muted)}
+.spec-v{
+  font-family:"IBM Plex Mono",monospace; font-size:12.4px; font-weight:500;
+  color:var(--ink); text-align:right; font-variant-numeric:tabular-nums;
+}
+.spec-v.good{color:var(--good)} .spec-v.warn{color:var(--warn)} .spec-v.bad{color:var(--bad)}
+
+/* ---------- table ---------- */
+.table-scroll{overflow-x:auto; border:1px solid var(--rule); background:var(--surface); margin:0 0 16px}
+table{border-collapse:collapse; width:100%; min-width:820px; font-size:14px}
+th,td{padding:13px 16px; text-align:left; border-bottom:1px solid var(--rule); vertical-align:top}
+thead th{
+  font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted); background:var(--surface-2); white-space:nowrap;
+}
+tbody th{font-weight:500; color:var(--ink); font-size:14px; white-space:nowrap}
+tbody tr:last-child td, tbody tr:last-child th{border-bottom:none}
+td{color:var(--ink-2); font-variant-numeric:tabular-nums}
+tr.dim th, tr.dim td{color:var(--muted)}
+tr.pick{background:var(--accent-soft)}
+tr.pick th{color:var(--ink)}
+.t-letter{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:600; letter-spacing:.06em;
+  color:var(--surface); background:var(--slate); padding:2px 7px; border-radius:2px;
+  display:inline-block; margin-right:9px;
+}
+.t-letter.is-pick{background:var(--accent); color:#FFF}
+:root[data-theme="dark"] .t-letter.is-pick,
+:root:not([data-theme="light"]) .t-letter.is-pick{color:#1A1206}
+.t-letter.is-alt{background:transparent; color:var(--muted); border:1px solid var(--rule-2)}
+.chan{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.05em;
+  text-transform:uppercase; color:var(--muted); white-space:nowrap;
+}
+.chan.alt{color:var(--bad)}
+.foot{font-size:12.8px; color:var(--muted); margin:0 0 60px; max-width:70ch}
+
+/* ---------- recommendation ---------- */
+.verdict{
+  background:var(--surface); border:1px solid var(--rule); border-top:2px solid var(--accent);
+  padding:34px 36px; margin:0 0 44px;
+}
+.verdict h2{margin-bottom:16px}
+.verdict p{margin:0 0 14px; color:var(--ink-2); max-width:64ch; font-size:15.4px}
+.verdict p:last-child{margin-bottom:0}
+.verdict strong{color:var(--ink); font-weight:600}
+
+.ask{border-top:1px solid var(--rule); padding-top:34px}
+.ask h2{margin-bottom:14px}
+.ask p{color:var(--ink-2); max-width:64ch; margin:0 0 22px; font-size:15.4px}
+.letters{display:flex; gap:10px; flex-wrap:wrap}
+.letter{
+  font-family:"IBM Plex Mono",monospace; font-size:13px; font-weight:600;
+  border:1px solid var(--rule-2); background:var(--surface); color:var(--ink-2);
+  padding:9px 16px; border-radius:2px; min-width:74px; text-align:center;
+}
+.letter.pick{border-color:var(--accent); color:var(--accent); background:var(--accent-soft)}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style><style>
+/* ---- components specific to this page ------------------------------------
+   The imported stylesheet's .spec / .split / .letter / .tmpl are short-value
+   stat rows, a 64ch two-up, a letter badge and an inline code chip. This page
+   needs prose comparisons and a document, so those get their own classes here
+   rather than being stretched out of shape. Tokens and type scale are shared. */
+
+.pc-h2{
+  font-family:Newsreader,Georgia,serif; font-weight:500;
+  font-size:clamp(1.55rem,3.1vw,2.05rem); line-height:1.16; letter-spacing:-.012em;
+  margin:0 0 14px; color:var(--ink); text-wrap:balance;
+}
+.pc-lede{margin:0 0 30px; color:var(--ink-2); max-width:66ch; font-size:15.6px}
+.pc-rule{height:1px; background:var(--rule-2); border:0; margin:58px 0 40px}
+
+/* criteria: label on its own line, prose underneath at a readable measure */
+.pc-crit{border-top:1px solid var(--rule); margin:0 0 34px}
+.pc-crit > div{padding:16px 0; border-bottom:1px solid var(--rule)}
+.pc-crit dt{
+  font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:10.5px; font-weight:600;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin:0 0 7px;
+}
+.pc-crit dt.good{color:var(--good)} .pc-crit dt.warn{color:var(--warn)}
+.pc-crit dt.bad{color:var(--bad)}
+.pc-crit dd{margin:0; color:var(--ink-2); font-size:14.8px; line-height:1.6; max-width:60ch}
+
+/* the artefact on the left, the analysis on the right */
+.pc-cmp{display:grid; grid-template-columns:minmax(0,340px) minmax(0,1fr);
+  gap:44px; align-items:start; margin:0 0 34px}
+.pc-cmp .screen{height:auto; min-height:0}
+.pc-cmp .thread{overflow:visible}
+
+/* the consent document */
+.pc-doc{
+  background:var(--surface); border:1px solid var(--rule);
+  border-top:2px solid var(--accent); padding:26px 26px 24px;
+}
+.pc-doc h4{
+  font-family:Newsreader,Georgia,serif; font-weight:600; font-size:1.12rem;
+  line-height:1.25; margin:0 0 16px; color:var(--ink);
+}
+.pc-doc p{margin:0 0 12px; font-size:13.9px; line-height:1.62; color:var(--ink-2)}
+.pc-doc p b{color:var(--ink); font-weight:600}
+.pc-field{margin:20px 0 0; padding:16px 0 0; border-top:1px solid var(--rule)}
+.pc-field .lbl{
+  font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:9.8px; font-weight:600;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--muted); display:block;
+  margin:0 0 9px;
+}
+.pc-input{
+  border:1px solid var(--rule-2); background:var(--ground); padding:11px 14px;
+  font-family:Newsreader,Georgia,serif; font-size:1.06rem; color:var(--ink);
+}
+.pc-tick{display:flex; align-items:center; gap:10px; margin:13px 0 0;
+  font-size:13px; color:var(--ink-2)}
+.pc-tick i{
+  width:15px; height:15px; flex:none; border:1px solid var(--accent);
+  background:var(--accent-soft); border-radius:2px; display:grid; place-items:center;
+  color:var(--accent); font-style:normal; font-size:10px; font-weight:700; line-height:1;
+}
+
+/* comparison table */
+.pc-table{width:100%; border-collapse:collapse; font-size:13.6px; min-width:560px}
+.pc-table th{
+  text-align:left; font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:10px;
+  font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--muted);
+  padding:14px 18px; border-bottom:1px solid var(--rule-2); white-space:nowrap;
+}
+.pc-table td{padding:13px 18px; border-bottom:1px solid var(--rule); color:var(--ink-2)}
+.pc-table tr:last-child td{border-bottom:0}
+.pc-table td:first-child{color:var(--ink); width:44%}
+.pc-table td.y{color:var(--good); font-weight:500}
+.pc-table td.n{color:var(--bad); font-weight:500}
+.pc-table td.p{color:var(--warn); font-weight:500}
+
+@media (max-width:860px){
+  .pc-cmp{grid-template-columns:1fr; gap:26px}
+  .pc-rule{margin:44px 0 32px}
+}
+</style>
+<style>
+/* the imported .opt-head reserves 122px for a two-line serif heading it does not
+   have here, which strands each paragraph below a gap. */
+.options .opt-head{min-height:0; gap:11px}
+.options .opt{gap:11px}
+.options .opt-sub{color:var(--ink-2); font-size:14.6px}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+
+<div class="masthead">
+  <p class="eyebrow">Vine and Branches · Safeguarding</p>
+  <h1>Parental consent</h1>
+  <p class="standfirst">A member aged 13 to 17 cannot be switched on until a guardian has
+  said yes. The awkward part is that WhatsApp will not let us message a guardian who has
+  never messaged us first, so consent cannot simply be a message we send. Here are the two
+  routes, side by side, and a third that I think is the right answer.</p>
+</div>
+
+<h2 class="pc-h2">Three things have to be true at the end</h2>
+<p class="pc-lede">Every option below is really an argument about which of these you get.
+None is optional, which makes the choice narrower than it first looks.</p>
+
+<dl class="pc-crit">
+  <div><dt>A guardian actually saw it</dt>
+    <dd>Not "a number replied yes". A person read what their child will receive daily, who
+    can see the journal, and what happens if the crisis check fires. Consent to something
+    nobody read is not consent.</dd></div>
+  <div><dt>There is a record</dt>
+    <dd>Something you could produce a year later if a guardian says they never agreed. A
+    timestamp, the exact wording they saw, and what they typed.</dd></div>
+  <div><dt>The guardian's number works</dt>
+    <dd>This is the one that gets forgotten. Workflow 13 sends a crisis alert to the
+    guardian of a minor. A number nobody ever verified is a number that fails on the single
+    night the whole safeguarding design exists for.</dd></div>
+</dl>
+
+<hr class="pc-rule">
+
+<h2 class="pc-h2">Option A · The guardian texts in</h2>
+<p class="pc-lede">The teenager signs up and is held pending. They are given a short code
+and told a parent or guardian has to send it from their own phone. The guardian opens
+WhatsApp and sends it, and because they messaged us first, everything after that is an
+ordinary conversation with no template and no cost.</p>
+
+<div class="pc-cmp">
+  <div>
+    <div class="phone"><div class="screen">
+      <div class="chat-head"><div class="avatar">V</div>
+        <div><div class="chat-name">Vine and Branches</div>
+          <div class="chan">Guardian's phone</div></div></div>
+      <div class="thread">
+        <div class="msg out"><div class="bubble">CONSENT 4821</div></div>
+        <div class="msg"><div class="bubble">Thank you. You are confirming consent for <b>Marcus Reed</b>, age 15, at Grace Family Church.</div></div>
+        <div class="msg"><div class="bubble">Marcus will receive one short Bible teaching each weekday morning, and an invitation each evening to write a private reflection.
+
+Church staff can read what he writes.
+
+If anything he writes suggests he is at risk, staff are alerted immediately, and so are you, on this number.</div></div>
+        <div class="msg"><div class="bubble">Reply <b>I CONSENT</b> if you are happy for him to begin.</div></div>
+        <div class="msg out"><div class="bubble">I CONSENT</div></div>
+        <div class="msg"><div class="bubble">Recorded. Marcus starts tomorrow morning.</div></div>
+      </div>
+    </div></div>
+  </div>
+  <div>
+    <dl class="pc-crit">
+      <div><dt class="good">Number verified</dt>
+        <dd>By construction. They messaged from it, so the crisis alert has somewhere real
+        to land. This is the option's whole strength, and it is not a small one.</dd></div>
+      <div><dt class="warn">Disclosure is thin</dt>
+        <dd>Four chat bubbles is not a consent document. It is what fits before a person
+        stops reading, and there is no version of it that includes a data policy.</dd></div>
+      <div><dt class="warn">The record is weak</dt>
+        <dd>You have "a number sent I CONSENT on this date". You cannot show what wording
+        was on screen at the time, if the copy has changed since.</dd></div>
+      <div><dt class="bad">Trivially faked</dt>
+        <dd>A fifteen year old with a second number, or a willing friend, clears this in a
+        minute. Nothing in the flow tests that the sender is a parent.</dd></div>
+    </dl>
+    <div class="note"><span class="note-label">Cost to build</span>
+      <p>Lowest of the three by some distance. No web page, no email, no template. It is a
+      keyword handler on the number you already have, and it is the only option that adds
+      nothing to the monthly bill.</p></div>
+  </div>
+</div>
+
+<hr class="pc-rule">
+
+<h2 class="pc-h2">Option B · The guardian signs on a page</h2>
+<p class="pc-lede">The teenager enters a guardian's name and email. We send that address a
+one-time link. The guardian opens a page that explains the whole thing properly, types
+their name, and confirms. The teenager is activated when the page is submitted, not
+before.</p>
+
+<div class="pc-cmp">
+  <div>
+    <div class="pc-doc">
+      <h4>Consent for Marcus Reed, age 15</h4>
+      <p>Grace Family Church would like Marcus to join Vine and Branches, a daily
+      discipleship programme delivered over WhatsApp.</p>
+      <p><b>What he receives.</b> One short Bible teaching each weekday morning, and an
+      invitation each evening to write a private reflection.</p>
+      <p><b>Who can read it.</b> Named pastoral staff at Grace Family Church. Not other
+      members, and not other churches.</p>
+      <p><b>If he is at risk.</b> Every reflection is checked. If anything suggests Marcus
+      may be in danger, church staff are alerted immediately, and so are you.</p>
+      <p><b>Stopping.</b> You can end this at any time by replying STOP from your phone, or
+      by contacting the church.</p>
+      <div class="pc-field">
+        <span class="lbl">Type your full name to consent</span>
+        <div class="pc-input">Angela Reed</div>
+        <div class="pc-tick"><i>✓</i> I am Marcus's parent or legal guardian</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <dl class="pc-crit">
+      <div><dt class="good">The disclosure is real</dt>
+        <dd>There is room to say all of it, including the crisis policy, in language a
+        parent can act on. None of this fits in a chat bubble.</dd></div>
+      <div><dt class="good">The record is defensible</dt>
+        <dd>Timestamp, the exact wording served, the typed name, and which link was used
+        and when it was issued. This is a document rather than a reply.</dd></div>
+      <div><dt class="bad">The number is unverified</dt>
+        <dd>Whatever phone number ends up on the record was typed in by the teenager. The
+        crisis alert depends on it, and nothing in this flow has ever sent anything to it
+        successfully.</dd></div>
+      <div><dt class="warn">Email gets missed</dt>
+        <dd>Consent now depends on a parent finding an email from a sender they do not
+        recognise. Expect to resend, and expect some never to land at all.</dd></div>
+    </dl>
+    <div class="note"><span class="note-label">Cost to build</span>
+      <p>A hosted page, a signed single-use link, and an email sender. Modest, and it is
+      work that has to happen anyway if you ever want a paper trail.</p></div>
+  </div>
+</div>
+
+<hr class="pc-rule">
+
+<h2 class="pc-h2">Option C · The page for the record, WhatsApp to bind the number</h2>
+<p class="pc-lede">Option A verifies a phone number but cannot properly disclose. Option B
+discloses properly but leaves the phone number unverified. They fail in opposite
+directions, which is the clue: run both, in that order, and each covers the other's
+hole.</p>
+
+<div class="options">
+  <div class="opt"><div class="opt-head">
+      <div class="opt-tag"><span class="opt-letter">1</span></div>
+      <h3>The page</h3></div>
+    <p class="opt-sub">The guardian opens the emailed link, reads the disclosure, types
+    their name. This produces the record. The teenager is <b>not</b> activated yet.</p></div>
+  <div class="opt"><div class="opt-head">
+      <div class="opt-tag"><span class="opt-letter">2</span></div>
+      <h3>Their phone</h3></div>
+    <p class="opt-sub">The page finishes by showing a code and a WhatsApp button. The
+    guardian sends it from the handset they want to be reached on.</p></div>
+  <div class="opt pick"><div class="opt-head">
+      <div class="opt-tag"><span class="opt-letter">3</span></div>
+      <h3>Activated</h3></div>
+    <p class="opt-sub">The record and the number now belong to the same act of consent, and
+    the crisis alert has reached a real handset once before it was ever needed.</p></div>
+</div>
+
+<div class="verdict">
+  <p><b>The crisis alert is what decides this.</b> Everything else in the comparison is a
+  matter of degree, and either of the first two options would be defensible on its own
+  terms. But Workflow 13 messages the guardian of a minor at the worst moment of that
+  family's year. It does it automatically, at 2am, with nobody checking the number first. A
+  consent flow that never sent anything to that number is a flow that finds out it was
+  wrong on the only night it mattered.</p>
+  <p>Option C is one extra step for the guardian, taken while they are already sitting in
+  front of the page, and it turns an untested number into a tested one.</p>
+</div>
+
+<hr class="pc-rule">
+
+<h2 class="pc-h2">Where each one leaves you</h2>
+
+<div class="table-scroll">
+<table class="pc-table">
+  <tr><th>&nbsp;</th><th>A · Texts in</th><th>B · Web page</th><th>C · Both</th></tr>
+  <tr><td>Guardian read a real disclosure</td>
+    <td class="n">Four bubbles</td><td class="y">Yes</td><td class="y">Yes</td></tr>
+  <tr><td>Record you could produce later</td>
+    <td class="n">A reply</td><td class="y">Yes</td><td class="y">Yes</td></tr>
+  <tr><td>Crisis alert reaches a proven number</td>
+    <td class="y">Yes</td><td class="n">No</td><td class="y">Yes</td></tr>
+  <tr><td>Resists a teenager faking it</td>
+    <td class="n">No</td><td class="p">Partly</td><td class="p">Partly</td></tr>
+  <tr><td>Build cost</td>
+    <td class="y">Lowest</td><td class="p">Moderate</td><td class="p">Moderate</td></tr>
+</table>
+</div>
+
+<div class="note"><span class="note-label">Worth saying plainly</span>
+  <p>None of the three proves the person consenting is the parent. A determined teenager
+  defeats all of them, and that is true of every consent flow of this kind, including the
+  ones large platforms use. What C buys you is not certainty. It is that the consent was
+  informed, that there is a record of it, and that the number you will rely on in an
+  emergency has been used successfully at least once.</p></div>
+
+<hr class="pc-rule">
+
+<h2 class="pc-h2">What I need from you before this gets built</h2>
+
+<dl class="pc-crit">
+  <div><dt>The consent wording</dt>
+    <dd>The page text above is mine, written so you have something concrete to react to
+    rather than a description of something. The words a guardian actually agrees to should
+    be yours, and if your denomination or your insurer has a form for this, that wins over
+    anything I would write.</dd></div>
+  <div><dt>The age range</dt>
+    <dd>Built for 13 to 17, on the assumption that under 13 is simply not permitted.
+    Confirm that, because if under 13 is allowed with consent there is a third state to
+    handle rather than a rejection.</dd></div>
+  <div><dt>Guardian as payer</dt>
+    <dd>If a minor's subscription has to be paid by the guardian, the cleanest moment to
+    collect it is the end of the consent page, while they are already there and already
+    agreeing. Say the word and it goes into the same flow.</dd></div>
+</dl>
+
+<p class="foot">Built ahead of the contract so this decision is not sitting in the critical
+path once work starts. Nothing here is live, and no member or guardian has been contacted.</p>
+
+</div>
+
+</body>
+</html>
