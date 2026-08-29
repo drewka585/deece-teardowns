@@ -91,8 +91,31 @@ h1{
   border:1px solid var(--rule); padding:2px 7px; border-radius:2px; color:var(--ink);
   display:inline-block; margin:2px 0;
 }
+.split{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0 10px; max-width:64ch}
+.side{border:1px solid var(--rule); background:var(--ground); padding:15px 17px 16px}
+.side.paid{border-left:2px solid var(--accent)}
+.side.free{border-left:2px solid var(--good)}
+.side h4{
+  font-family:"IBM Plex Mono",monospace; font-size:10px; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--muted); margin:0 0 3px;
+}
+.side .what{
+  font-family:Newsreader,Georgia,serif; font-size:1.16rem; line-height:1.2; margin:0 0 13px;
+  color:var(--ink); font-weight:500;
+}
+.side dl{margin:0; display:flex; flex-direction:column; gap:8px}
+.side dl div{display:flex; flex-direction:column; gap:1px}
+.side dt{
+  font-family:"IBM Plex Mono",monospace; font-size:9.5px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted);
+}
+.side dd{margin:0; font-size:13.8px; line-height:1.4; color:var(--ink-2)}
+.side dd.cost-paid{color:var(--accent); font-weight:600}
+.side dd.cost-free{color:var(--good); font-weight:600}
+.split-note{font-size:13.4px; color:var(--muted); margin:0 0 18px !important; max-width:64ch}
 @media (max-width:640px){
   .note{grid-template-columns:1fr; gap:14px}
+  .split{grid-template-columns:1fr}
 }
 
 /* ---------- section heads ---------- */
@@ -275,16 +298,41 @@ tr.pick th{color:var(--ink)}
   <header class="masthead">
     <p class="eyebrow">Vine and Branches · Delivery mockup · Milestone 1</p>
     <h1>How the daily lesson arrives</h1>
-    <p class="standfirst">A full lesson runs about 5,000 characters. The messaging platform will not carry that in one piece, so the lesson has to arrive as a sequence. Here is how each version actually reads at 6am on a member's phone, and what each one costs you to run.</p>
+    <p class="standfirst">A full lesson runs about 5,000 characters. Meta will not carry that in one piece, so the lesson has to arrive as a sequence. Here is how each version actually reads at 6am on a member's phone, and what each one costs you to run.</p>
   </header>
 
   <section class="note">
     <p class="note-label">The rule<br>behind this</p>
     <div>
-      <p>Approval happens <strong>once, upfront, per message shape</strong>. Not per send, and never per person. You submit a body with slots in it, like <span class="tmpl">Good morning, {{1}}. Day {{2}} of your walk through {{3}}.</span> The provider reviews that shape once, usually inside a day. After that the system sends it as many times as you like with different text in the slots, and <strong>no one reads a member's lesson before it goes out.</strong></p>
-      <p>So the lessons are not identical. The slots hold freshly written text, including the verse, the teaching, and a line that answers what the member journalled last night. What has to stay fixed is the <strong>scaffolding between the slots</strong>, and the provider will reject a body that is nothing but slots, since that would sidestep the review entirely.</p>
-      <p>That is the whole constraint on a message you start: <strong>a fixed frame with freely written contents</strong>, capped at 1,024 characters, billed per send. The moment a member writes back, a <strong>24 hour reply window</strong> opens and even that disappears. Inside it you send anything, up to 4,096 characters, no approved shape and no per-message cost.</p>
-      <p>The 6am lesson is a message we start, a day after the member last wrote. So the only real question is <strong>how much of the lesson rides in the fixed frame, and how much waits for a reply.</strong></p>
+      <p><strong>Meta runs this channel, and they treat two kinds of message completely differently.</strong> Almost everything on this page falls out of that one split.</p>
+
+      <div class="split">
+        <div class="side paid">
+          <h4>Before they reply</h4>
+          <p class="what">A message you start</p>
+          <dl>
+            <div><dt>Wording</dt><dd>Must match a shape Meta approved</dd></div>
+            <div><dt>Length</dt><dd>1,024 characters</dd></div>
+            <div><dt>Cost</dt><dd class="cost-paid">A cent or two each</dd></div>
+          </dl>
+        </div>
+        <div class="side free">
+          <h4>After they reply</h4>
+          <p class="what">The 24 hour window</p>
+          <dl>
+            <div><dt>Wording</dt><dd>Anything you want</dd></div>
+            <div><dt>Length</dt><dd>4,096 characters</dd></div>
+            <div><dt>Cost</dt><dd class="cost-free">Free</dd></div>
+          </dl>
+        </div>
+      </div>
+      <p class="split-note">The window opens the moment a member writes to you, and stays open 24 hours.</p>
+
+      <p><strong>Approved once, not every time.</strong> You send Meta the <em>shape</em> of a message, with blanks in it, like <span class="tmpl">Good morning, {{1}}. Day {{2}} of your walk through {{3}}.</span> Meta checks that shape a single time, usually within minutes. Then it is yours for good and the system fills the blanks differently every morning. <strong>Nobody reads a member's lesson before it sends.</strong> Not Meta, not your staff, not us.</p>
+
+      <p><strong>The blanks can say anything.</strong> The verse, the teaching, a line answering what the member wrote last night, all of it written fresh that morning. Only the words around the blanks stay put. The one limit is that a shape cannot be all blanks, because then there would be nothing for Meta to check.</p>
+
+      <p>The 6am lesson is a message we start, a day after the member last wrote. So the only real question here is <strong>how much of the lesson rides in the approved opener, and how much waits for a reply.</strong></p>
     </div>
   </section>
 
@@ -315,29 +363,29 @@ tr.pick th{color:var(--ink)}
           </div>
           <div class="thread">
             <div class="msg">
-              <span class="chip">Approved · <span class="n">524 / 1024</span></span>
+              <span class="chip">Meta approved · <span class="n">524 / 1024</span></span>
               <div class="bubble">Good morning, Marcus. Day 12 of your walk through John.<span class="verse">"I am the vine; you are the branches. Whoever abides in me and I in him, he it is that bears much fruit, for apart from me you can do nothing." — John 15:5</span>Yesterday you wrote that you have been carrying your brother's situation on your own strength. Hold that next to this verse. Jesus does not say the branch works harder. He says the branch stays put.
 
 Abiding is not a feeling you manufacture on a good morning. It is a place you return to on a bad one. (1 of 5)</div>
             </div>
             <div class="msg">
-              <span class="chip">Approved · <span class="n">981 / 1024</span></span>
+              <span class="chip">Meta approved · <span class="n">981 / 1024</span></span>
               <div class="bubble">A branch does not strain toward the vine. It is already joined to it. The whole of its life is a matter of staying where it has been put, and letting something else do the carrying.<span class="cut">…continues for another 780 characters… (2 of 5)</span></div>
             </div>
             <div class="msg">
-              <span class="chip">Approved · <span class="n">874 / 1024</span></span>
+              <span class="chip">Meta approved · <span class="n">874 / 1024</span></span>
               <div class="bubble"><span class="cut">Teaching, third section — 874 characters. (3 of 5)</span></div>
             </div>
             <div class="msg">
-              <span class="chip">Approved · <span class="n">1012 / 1024</span></span>
+              <span class="chip">Meta approved · <span class="n">1012 / 1024</span></span>
               <div class="bubble"><span class="cut">Reflection and today's question — 1,012 characters. (4 of 5)</span></div>
             </div>
             <div class="msg">
-              <span class="chip">Approved · <span class="n">602 / 1024</span></span>
+              <span class="chip">Meta approved · <span class="n">602 / 1024</span></span>
               <div class="bubble">Where are you working instead of abiding this week? Write back whenever you are ready, and I will keep it with your journal. (5 of 5)</div>
             </div>
             <div class="msg">
-              <span class="chip">Approved</span>
+              <span class="chip">Meta approved</span>
               <div class="audio">
                 <span class="play"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M7.5 4.5L0.5 8.4V0.6L7.5 4.5Z" fill="#fff"/></svg></span>
                 <span class="wave"><i style="height:30%"></i><i style="height:58%"></i><i style="height:88%"></i><i style="height:44%"></i><i style="height:70%"></i><i style="height:36%"></i><i style="height:80%"></i><i style="height:52%"></i><i style="height:64%"></i><i style="height:28%"></i><i style="height:74%"></i><i style="height:40%"></i><i style="height:56%"></i><i style="height:84%"></i><i style="height:34%"></i><i style="height:62%"></i></span>
@@ -351,7 +399,7 @@ Abiding is not a feeling you manufacture on a good morning. It is a place you re
       <div class="spec">
         <div class="spec-row"><span class="spec-k">Messages at 6am</span><span class="spec-v warn">6</span></div>
         <div class="spec-row"><span class="spec-k">Arrives without a reply</span><span class="spec-v good">Yes</span></div>
-        <div class="spec-row"><span class="spec-k">Bodies needing approval</span><span class="spec-v bad">~14</span></div>
+        <div class="spec-row"><span class="spec-k">Shapes Meta approves</span><span class="spec-v bad">~14</span></div>
         <div class="spec-row"><span class="spec-k">Change a lesson's shape</span><span class="spec-v bad">Re-approval</span></div>
         <div class="spec-row"><span class="spec-k">Channel cost / member / mo</span><span class="spec-v bad">$0.70 – 4.50</span></div>
       </div>
@@ -377,7 +425,7 @@ Abiding is not a feeling you manufacture on a good morning. It is a place you re
           </div>
           <div class="thread">
             <div class="msg">
-              <span class="chip">Approved · <span class="n">183 / 1024</span></span>
+              <span class="chip">Meta approved · <span class="n">183 / 1024</span></span>
               <div class="bubble">Good morning, Marcus. Day 12 of your walk through John is ready, and today's reading sits directly on top of what you wrote last night. Reply with anything and I will send it through.</div>
             </div>
             <div class="msg out">
@@ -386,17 +434,17 @@ Abiding is not a feeling you manufacture on a good morning. It is a place you re
             </div>
             <div class="divider"><span>reply window open · 24h</span></div>
             <div class="msg">
-              <span class="chip">Written fresh · <span class="n">2,940 / 4,096</span></span>
+              <span class="chip">Free reply · <span class="n">2,940 / 4,096</span></span>
               <div class="bubble"><span class="verse">"I am the vine; you are the branches. Whoever abides in me and I in him, he it is that bears much fruit, for apart from me you can do nothing." — John 15:5</span>Yesterday you wrote that you have been carrying your brother's situation on your own strength. Hold that next to this verse. Jesus does not say the branch works harder. He says the branch stays put.
 
 Abiding is not a feeling you manufacture on a good morning. It is a place you return to on a bad one. A branch does not strain toward the vine, it is already joined to it.<span class="cut">…continues for another 2,400 characters…</span></div>
             </div>
             <div class="msg">
-              <span class="chip">Written fresh · <span class="n">1,160 / 4,096</span></span>
+              <span class="chip">Free reply · <span class="n">1,160 / 4,096</span></span>
               <div class="bubble">Where are you working instead of abiding this week? Write back whenever you are ready, and I will keep it with your journal.</div>
             </div>
             <div class="msg">
-              <span class="chip">Written fresh</span>
+              <span class="chip">Free reply</span>
               <div class="audio">
                 <span class="play"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M7.5 4.5L0.5 8.4V0.6L7.5 4.5Z" fill="#fff"/></svg></span>
                 <span class="wave"><i style="height:34%"></i><i style="height:66%"></i><i style="height:82%"></i><i style="height:40%"></i><i style="height:74%"></i><i style="height:30%"></i><i style="height:86%"></i><i style="height:48%"></i><i style="height:60%"></i><i style="height:32%"></i><i style="height:78%"></i><i style="height:44%"></i><i style="height:52%"></i><i style="height:88%"></i><i style="height:38%"></i><i style="height:58%"></i></span>
@@ -410,7 +458,7 @@ Abiding is not a feeling you manufacture on a good morning. It is a place you re
       <div class="spec">
         <div class="spec-row"><span class="spec-k">Messages at 6am</span><span class="spec-v good">1</span></div>
         <div class="spec-row"><span class="spec-k">Arrives without a reply</span><span class="spec-v bad">No</span></div>
-        <div class="spec-row"><span class="spec-k">Bodies needing approval</span><span class="spec-v good">~3</span></div>
+        <div class="spec-row"><span class="spec-k">Shapes Meta approves</span><span class="spec-v good">~3</span></div>
         <div class="spec-row"><span class="spec-k">Change a lesson's shape</span><span class="spec-v good">Anytime</span></div>
         <div class="spec-row"><span class="spec-k">Channel cost / member / mo</span><span class="spec-v good">$0.12 – 0.75</span></div>
       </div>
@@ -436,7 +484,7 @@ Abiding is not a feeling you manufacture on a good morning. It is a place you re
           </div>
           <div class="thread">
             <div class="msg">
-              <span class="chip">Approved · <span class="n">600 / 1024</span></span>
+              <span class="chip">Meta approved · <span class="n">600 / 1024</span></span>
               <div class="bubble">Good morning, Marcus. Day 12 of your walk through John.<span class="verse">"I am the vine; you are the branches. Whoever abides in me and I in him, he it is that bears much fruit, for apart from me you can do nothing." — John 15:5</span>Yesterday you wrote that you have been carrying your brother's situation on your own strength. Hold that next to this verse. Jesus does not say the branch works harder. He says the branch stays put. Abiding is not a feeling you manufacture on a good morning, it is a place you return to on a bad one.
 
 Reply with anything and I will send you the rest, today's reflection, and the audio.</div>
@@ -447,11 +495,11 @@ Reply with anything and I will send you the rest, today's reflection, and the au
             </div>
             <div class="divider"><span>reply window open · 24h</span></div>
             <div class="msg">
-              <span class="chip">Written fresh · <span class="n">2,610 / 4,096</span></span>
+              <span class="chip">Free reply · <span class="n">2,610 / 4,096</span></span>
               <div class="bubble">A branch does not strain toward the vine. It is already joined to it. The whole of its life is a matter of staying where it has been put, and letting something else do the carrying.<span class="cut">…continues for another 2,430 characters, then today's reflection…</span></div>
             </div>
             <div class="msg">
-              <span class="chip">Written fresh</span>
+              <span class="chip">Free reply</span>
               <div class="audio">
                 <span class="play"><svg width="8" height="9" viewBox="0 0 8 9" fill="none"><path d="M7.5 4.5L0.5 8.4V0.6L7.5 4.5Z" fill="#fff"/></svg></span>
                 <span class="wave"><i style="height:32%"></i><i style="height:60%"></i><i style="height:86%"></i><i style="height:42%"></i><i style="height:72%"></i><i style="height:34%"></i><i style="height:82%"></i><i style="height:50%"></i><i style="height:66%"></i><i style="height:30%"></i><i style="height:76%"></i><i style="height:38%"></i><i style="height:54%"></i><i style="height:86%"></i><i style="height:36%"></i><i style="height:64%"></i></span>
@@ -463,7 +511,7 @@ Reply with anything and I will send you the rest, today's reflection, and the au
               <div class="bubble">The brother thing. I keep trying to fix it before I pray about it.</div>
             </div>
             <div class="msg">
-              <span class="chip">Written fresh</span>
+              <span class="chip">Free reply</span>
               <div class="bubble">That is worth keeping. I have saved it to your journal, and it is the thread we will pick up tomorrow.</div>
             </div>
           </div>
@@ -473,7 +521,7 @@ Reply with anything and I will send you the rest, today's reflection, and the au
       <div class="spec">
         <div class="spec-row"><span class="spec-k">Messages at 6am</span><span class="spec-v good">1</span></div>
         <div class="spec-row"><span class="spec-k">Arrives without a reply</span><span class="spec-v good">Yes, in part</span></div>
-        <div class="spec-row"><span class="spec-k">Bodies needing approval</span><span class="spec-v good">~4</span></div>
+        <div class="spec-row"><span class="spec-k">Shapes Meta approves</span><span class="spec-v good">~4</span></div>
         <div class="spec-row"><span class="spec-k">Change a lesson's shape</span><span class="spec-v warn">Free past the opener</span></div>
         <div class="spec-row"><span class="spec-k">Channel cost / member / mo</span><span class="spec-v good">$0.12 – 0.75</span></div>
       </div>
@@ -481,49 +529,49 @@ Reply with anything and I will send you the rest, today's reflection, and the au
 
   </div>
 
-  <p class="foot">The cost ranges are wide for one reason. The platform prices a message you start by the category it assigns your template, and a daily devotional could land in either of two bands roughly six times apart. The low end of each range assumes the cheaper band, the high end assumes the dearer one. That call is the platform's, not ours, so it gets confirmed with a live test template in Milestone 1 before anything is built on top of it. Replies inside the 24 hour window are free in every case, which is why the options that send one message a day sit so far below the one that sends six.</p>
+  <p class="foot">The cost ranges are wide for one reason. Meta prices a message you start by the category it assigns your template, and a daily devotional could land in either of two bands roughly six times apart. The low end of each range assumes the cheaper band, the high end assumes the dearer one. That call is Meta's, not ours, so it gets confirmed with a live test template in Milestone 1 before anything is built on top of it. Replies inside the 24 hour window are free in every case, which is why the options that send one message a day sit so far below the one that sends six.</p>
 
   <div class="sec-head">
     <h2>All four, side by side</h2>
-    <p><strong>A, B and C are the same channel</strong> and differ only in how much of the lesson rides in the approved opener. <strong>D leaves that channel entirely</strong> for plain SMS through Twilio. The proposal promised you a look at it, so here it is on the same terms, including the part that is easy to miss: SMS is not the approval-free option.</p>
+    <p><strong>A, B and C all run on Meta</strong> and differ only in how much of the lesson rides in the approved opener. <strong>D leaves Meta entirely</strong> for plain SMS through Twilio. The proposal promised you a look at it, so here it is on the same terms, including the part that is easy to miss: SMS is not the approval-free option.</p>
   </div>
 
   <div class="table-scroll">
     <table>
       <thead>
         <tr>
-          <th>Option</th><th>Channel</th><th>At 6am</th><th>Needs a reply</th><th>Approval step</th><th>Per member / mo</th><th>Real cost to you</th>
+          <th>Option</th><th>Channel</th><th>At 6am</th><th>Needs a reply</th><th>Approved by</th><th>Per member / mo</th><th>Real cost to you</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <th><span class="t-letter">A</span>All approved</th>
-          <td><span class="chan">Messaging platform</span></td>
-          <td>6 messages</td><td>No</td><td>~14 shapes, once</td><td>$0.70 &ndash; 4.50</td>
+          <td><span class="chan">Meta</span></td>
+          <td>6 messages</td><td>No</td><td>Meta &middot; 14 shapes, once</td><td>$0.70 &ndash; 4.50</td>
           <td>The whole lesson is locked into five fixed shapes, so changing how a lesson is built waits on review. The words inside them still change daily.</td>
         </tr>
         <tr>
           <th><span class="t-letter">B</span>Knock first</th>
-          <td><span class="chan">Messaging platform</span></td>
-          <td>1 message</td><td>Yes, always</td><td>~3 shapes, once</td><td>$0.12 &ndash; 0.75</td>
+          <td><span class="chan">Meta</span></td>
+          <td>1 message</td><td>Yes, always</td><td>Meta &middot; 3 shapes, once</td><td>$0.12 &ndash; 0.75</td>
           <td>A member who does not reply gets nothing that day. On a devotional, that is most people some mornings.</td>
         </tr>
         <tr class="pick">
           <th><span class="t-letter is-pick">C</span>Standalone opener</th>
-          <td><span class="chan">Messaging platform</span></td>
-          <td>1 message</td><td>Only for the rest</td><td>~4 shapes, once</td><td>$0.12 &ndash; 0.75</td>
+          <td><span class="chan">Meta</span></td>
+          <td>1 message</td><td>Only for the rest</td><td>Meta &middot; 4 shapes, once</td><td>$0.12 &ndash; 0.75</td>
           <td>Only the opener's frame is fixed. The verse, the teaching and the journal callback are written fresh every morning.</td>
         </tr>
         <tr>
           <th><span class="t-letter is-alt">D</span>Long SMS</th>
-          <td><span class="chan alt">Twilio, not the platform</span></td>
-          <td>1 long text</td><td>No</td><td>Carrier registration</td><td>$10.00 &ndash; 11.00</td>
+          <td><span class="chan alt">Twilio, not Meta</span></td>
+          <td>1 long text</td><td>No</td><td>US carriers &middot; ongoing</td><td>$10.00 &ndash; 11.00</td>
           <td>Trades one approval regime for another. US carriers require brand and campaign registration before a single text sends, and it is still roughly 33 billed segments a lesson, with no audio, no read state and no journal thread.</td>
         </tr>
       </tbody>
     </table>
   </div>
-  <p class="foot">D is the honest comparison, not a straw man, and it is the one option that gets worse the closer you look. It does not remove the approval step, it swaps a one time template review for US carrier registration, which vets the brand and the campaign before a single message sends and blocks unregistered traffic. On top of that it runs more than ten times the cost of C, and it loses the thing the whole platform is built on, which is one continuous conversation the member can scroll back through, and that the journal, the matching and the crisis checks all read from.</p>
+  <p class="foot">D is the honest comparison, not a straw man, and it is the one option that gets worse the closer you look. It does not remove the approval step, it swaps a one time review by Meta for US carrier registration, which vets the brand and the campaign before a single message sends and blocks unregistered traffic. On top of that it runs more than ten times the cost of C, and it loses the thing the whole platform is built on, which is one continuous conversation the member can scroll back through, and that the journal, the matching and the crisis checks all read from.</p>
 
   <section class="verdict">
     <h2>What I would build</h2>
@@ -534,7 +582,7 @@ Reply with anything and I will send you the rest, today's reflection, and the au
 
   <section class="ask">
     <h2>What I need back</h2>
-    <p>One letter. If it is A, B or C I will draft the message shapes against it and submit them on day one, so the review clock is running while the rest of Milestone 1 gets built. If it is D there is nothing to submit and we wire Twilio instead.</p>
+    <p>One letter. If it is A, B or C I will draft the message shapes against it and send them to Meta on day one, so the review clock is running while the rest of Milestone 1 gets built. If it is D there is nothing to submit and we wire Twilio instead.</p>
     <div class="letters">
       <span class="letter">A</span>
       <span class="letter">B</span>
