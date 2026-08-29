@@ -353,7 +353,7 @@ Abiding is not a feeling you manufacture on a good morning. It is a place you re
         <div class="spec-row"><span class="spec-k">Arrives without a reply</span><span class="spec-v good">Yes</span></div>
         <div class="spec-row"><span class="spec-k">Bodies needing approval</span><span class="spec-v bad">~14</span></div>
         <div class="spec-row"><span class="spec-k">Change a lesson's shape</span><span class="spec-v bad">Re-approval</span></div>
-        <div class="spec-row"><span class="spec-k">Channel cost / member / mo</span><span class="spec-v bad">$1.80 – 2.70</span></div>
+        <div class="spec-row"><span class="spec-k">Channel cost / member / mo</span><span class="spec-v bad">$0.70 – 4.50</span></div>
       </div>
     </article>
 
@@ -412,7 +412,7 @@ Abiding is not a feeling you manufacture on a good morning. It is a place you re
         <div class="spec-row"><span class="spec-k">Arrives without a reply</span><span class="spec-v bad">No</span></div>
         <div class="spec-row"><span class="spec-k">Bodies needing approval</span><span class="spec-v good">~3</span></div>
         <div class="spec-row"><span class="spec-k">Change a lesson's shape</span><span class="spec-v good">Anytime</span></div>
-        <div class="spec-row"><span class="spec-k">Channel cost / member / mo</span><span class="spec-v good">$0.30 – 0.45</span></div>
+        <div class="spec-row"><span class="spec-k">Channel cost / member / mo</span><span class="spec-v good">$0.12 – 0.75</span></div>
       </div>
     </article>
 
@@ -475,17 +475,17 @@ Reply with anything and I will send you the rest, today's reflection, and the au
         <div class="spec-row"><span class="spec-k">Arrives without a reply</span><span class="spec-v good">Yes, in part</span></div>
         <div class="spec-row"><span class="spec-k">Bodies needing approval</span><span class="spec-v good">~4</span></div>
         <div class="spec-row"><span class="spec-k">Change a lesson's shape</span><span class="spec-v warn">Free past the opener</span></div>
-        <div class="spec-row"><span class="spec-k">Channel cost / member / mo</span><span class="spec-v good">$0.30 – 0.45</span></div>
+        <div class="spec-row"><span class="spec-k">Channel cost / member / mo</span><span class="spec-v good">$0.12 – 0.75</span></div>
       </div>
     </article>
 
   </div>
 
-  <p class="foot">Costs are order of magnitude at current US rates for this message class, and get pinned exactly in Milestone 1 once the real lesson length is known. Approved-body counts assume one opener per lesson type plus the onboarding and consent messages.</p>
+  <p class="foot">The cost ranges are wide for one reason. The platform prices a message you start by the category it assigns your template, and a daily devotional could land in either of two bands roughly six times apart. The low end of each range assumes the cheaper band, the high end assumes the dearer one. That call is the platform's, not ours, so it gets confirmed with a live test template in Milestone 1 before anything is built on top of it. Replies inside the 24 hour window are free in every case, which is why the options that send one message a day sit so far below the one that sends six.</p>
 
   <div class="sec-head">
     <h2>All four, side by side</h2>
-    <p><strong>A, B and C are the same channel</strong> and differ only in how much of the lesson rides in the approved opener. <strong>D leaves that channel entirely</strong> for plain SMS through Twilio, which has no approval step at all. The proposal promised you a look at it, so here it is on the same terms.</p>
+    <p><strong>A, B and C are the same channel</strong> and differ only in how much of the lesson rides in the approved opener. <strong>D leaves that channel entirely</strong> for plain SMS through Twilio. The proposal promised you a look at it, so here it is on the same terms, including the part that is easy to miss: SMS is not the approval-free option.</p>
   </div>
 
   <div class="table-scroll">
@@ -499,31 +499,31 @@ Reply with anything and I will send you the rest, today's reflection, and the au
         <tr>
           <th><span class="t-letter">A</span>All approved</th>
           <td><span class="chan">Messaging platform</span></td>
-          <td>6 messages</td><td>No</td><td>~14 shapes, once</td><td>$1.80 &ndash; 2.70</td>
+          <td>6 messages</td><td>No</td><td>~14 shapes, once</td><td>$0.70 &ndash; 4.50</td>
           <td>The whole lesson is locked into five fixed shapes, so changing how a lesson is built waits on review. The words inside them still change daily.</td>
         </tr>
         <tr>
           <th><span class="t-letter">B</span>Knock first</th>
           <td><span class="chan">Messaging platform</span></td>
-          <td>1 message</td><td>Yes, always</td><td>~3 shapes, once</td><td>$0.30 &ndash; 0.45</td>
+          <td>1 message</td><td>Yes, always</td><td>~3 shapes, once</td><td>$0.12 &ndash; 0.75</td>
           <td>A member who does not reply gets nothing that day. On a devotional, that is most people some mornings.</td>
         </tr>
         <tr class="pick">
           <th><span class="t-letter is-pick">C</span>Standalone opener</th>
           <td><span class="chan">Messaging platform</span></td>
-          <td>1 message</td><td>Only for the rest</td><td>~4 shapes, once</td><td>$0.30 &ndash; 0.45</td>
+          <td>1 message</td><td>Only for the rest</td><td>~4 shapes, once</td><td>$0.12 &ndash; 0.75</td>
           <td>Only the opener's frame is fixed. The verse, the teaching and the journal callback are written fresh every morning.</td>
         </tr>
         <tr>
           <th><span class="t-letter is-alt">D</span>Long SMS</th>
           <td><span class="chan alt">Twilio, not the platform</span></td>
-          <td>1 long text</td><td>No</td><td>None at all</td><td>$7.00 &ndash; 8.00</td>
-          <td>Nothing to approve, but roughly 33 billed segments a lesson, no audio, no read state, and no journal thread.</td>
+          <td>1 long text</td><td>No</td><td>Carrier registration</td><td>$10.00 &ndash; 11.00</td>
+          <td>Trades one approval regime for another. US carriers require brand and campaign registration before a single text sends, and it is still roughly 33 billed segments a lesson, with no audio, no read state and no journal thread.</td>
         </tr>
       </tbody>
     </table>
   </div>
-  <p class="foot">D is the honest comparison, not a straw man. It removes the approval step completely, and it is roughly twenty times the running cost. It also loses the thing the whole platform is built on, which is one continuous conversation the member can scroll back through, and that the journal, the matching and the crisis checks all read from.</p>
+  <p class="foot">D is the honest comparison, not a straw man, and it is the one option that gets worse the closer you look. It does not remove the approval step, it swaps a one time template review for US carrier registration, which vets the brand and the campaign before a single message sends and blocks unregistered traffic. On top of that it runs more than ten times the cost of C, and it loses the thing the whole platform is built on, which is one continuous conversation the member can scroll back through, and that the journal, the matching and the crisis checks all read from.</p>
 
   <section class="verdict">
     <h2>What I would build</h2>
